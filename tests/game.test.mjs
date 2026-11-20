@@ -97,8 +97,8 @@ test('scenario defaults and new v1.2 fields validate bounds and deterministic fu
   for(const bad of [{player:{successful_lights:-1}},{player:{successful_lights:1.1}},{player:{successful_lights:1,carried:13}},{lanterns:[{id:'L1',fuel:101}]},{lanterns:[{id:'L1',fuel:-1}]},{lanterns:[{id:'L1',ever_lit:1}]},{shades:[{pos:[0,0,0],state:'drain',target_lantern_id:'L9'}]}])assert.throws(()=>make(bad),InputError);
 });
 
-test('standard tuning v1.2, durations and score constants are exact',()=>{
-  assert.equal(contract.contract_version,'1.2');
+test('standard tuning v1.3, durations and score constants are exact',()=>{
+  assert.equal(contract.contract_version,'1.3');
   for(const [key,value] of Object.entries({player_speed:6,carry_capacity:10,lantern_cost:10,pickup_radius:1,interact_radius:2,dash_speed:14,dash_duration_s:0.2,dash_cooldown_s:1.5,pulse_cost:3,pulse_radius:5,pulse_cooldown_s:3,pulse_stun_s:2,pulse_push_m:4,flames:3,invuln_s:1.5,hit_drop_ratio:0.5,safe_radius:6,shade_speed:4,shade_hit_radius:1,fall_enabled:true,night1_duration_s:240,night2_duration_s:270,night3_duration_s:300,fuel_max:100,fuel_decay_per_s:1,fuel_per_mote:10,relight_cost:5,win_ratio:0.6,drain_per_s:5,low_fuel_threshold:30,capacity_max:20}))assert.equal(t[key],value,key);
   assert.deepEqual(t.score,{per_mote:5,per_lantern:100,per_stun:5,per_relight:40,per_drain_stun:15,per_lit_at_dawn:50,per_flame_left:50});
 });

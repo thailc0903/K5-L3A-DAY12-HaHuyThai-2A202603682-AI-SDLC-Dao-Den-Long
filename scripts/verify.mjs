@@ -1,4 +1,4 @@
-import {mkdir,writeFile,readFile,rename,rm} from 'node:fs/promises';
+import {mkdir,writeFile,readFile,rename,rm,readdir as directoryEntries} from 'node:fs/promises';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import {join} from 'node:path';
@@ -6,7 +6,7 @@ import {createHash} from 'node:crypto';
 import os from 'node:os';
 import assert from 'node:assert/strict';
 import {createLevel} from '../src/levels.mjs';
-const root=fileURLToPath(new URL('../',import.meta.url)),proof=join(root,'docs/proof/phase-3'),pending=join(proof,'.pending');
+const root=fileURLToPath(new URL('../',import.meta.url)),proof=join(root,'docs/proof/phase-4'),pending=join(proof,'.pending');
 await mkdir(pending,{recursive:true});
 const run=(args)=>{const start=performance.now(),r=spawnSync(process.execPath,args,{cwd:root,encoding:'utf8',maxBuffer:8*1024*1024,timeout:60000});if(r.status!==0)throw new Error(`${args.join(' ')} failed\n${r.stdout??''}${r.stderr??''}${r.error??''}`);return{output:r.stdout,ms:performance.now()-start};};
 const json=async(path)=>JSON.parse(await readFile(path,'utf8'));
@@ -17,7 +17,7 @@ const hash=(value)=>createHash('sha256').update(value).digest('hex');
 try{
   await writeFile(join(pending,'build.txt'),run(['scripts/check.mjs']).output);
   await writeFile(join(pending,'http.json'),run(['scripts/http-smoke.mjs']).output);
-  const report=run(['--test','--test-reporter=tap','tests/game.test.mjs','tests/presentation.test.mjs','tests/scene.test.mjs']).output;
+  const report=run(['--test','--test-reporter=tap','tests/game.test.mjs','tests/presentation.test.mjs','tests/scene.test.mjs','tests/release.test.mjs']).output;
   await writeFile(join(pending,'tests.tap'),report);
   const cases=await json(join(root,'tests/scenarios/phase-2/cases.json')),results=[];
   for(const c of cases){assert.ok(['dash','pause','drifter-steal','drifter-drop','charm','fall','pad','tiers','wind'].includes(c.name),'Missing verification for scenario '+c.name);const args=['scripts/headless.mjs','--seed','12','--night',String(c.night),'--ticks',String(c.ticks),'--snapshot-every',String(c.every),'--scenario',`tests/scenarios/phase-2/${c.name}.json`,'--out',join(pending,c.name+'.jsonl')];if(c.inputs)args.push('--inputs',`tests/scenarios/phase-2/${c.inputs}`);const result=run(args),rows=await lines(c.name),s=snap(rows);
@@ -60,12 +60,18 @@ try{
   const benchmark=[];
   for(const suffix of ['a','b']){const r=run(['scripts/headless.mjs','--seed','12','--night','3','--ticks','18000','--scenario','tests/scenarios/phase-3/benchmark.json','--out',join(pending,`benchmark-${suffix}.jsonl`)]);assert.ok(r.ms<=30000,`Headless exceeded 30s: ${r.ms}`);benchmark.push(r.ms);}
   const a=await readFile(join(pending,'benchmark-a.jsonl')),b=await readFile(join(pending,'benchmark-b.jsonl'));assert.ok(a.equals(b),'Determinism mismatch');const end=JSON.parse(a.toString().trim().split('\n').at(-1));assert.equal(end.ticks,18000);assert.equal(end.state,'lost');
-  const source={};for(const path of ['game.contract.json','index.html','src/style.css','src/game.mjs','src/levels.mjs','src/rules.mjs','src/validation.mjs','src/browser.mjs','src/view.mjs','src/campaign.mjs','src/audio.mjs','src/settings.mjs','src/performance.mjs','scripts/headless.mjs'])source[path]=hash((await readFile(join(root,path),'utf8')).replace(/\r\n/g,'\n'));
-  const summary={contract_version:'1.2',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,
+  const {readdir:proofFiles}=await import('node:fs/promises');const compatible={};for(const file of (await proofFiles(pending)).filter((f)=>f.endsWith('.jsonl'))){const value=await readFile(join(pending,file)),previous=await readFile(join(root,'docs/proof/phase-3',file));assert.ok(value.equals(previous),'Phase 3 headless compatibility mismatch: '+file);compatible[file]=hash(value);}await writeFile(join(pending,'compatibility.json'),JSON.stringify({baseline_tag:'phase-3',identical:true,files_sha256:compatible},null,2)+'\n');
+  run(['scripts/video-check.mjs','--out',join(pending,'video-check.json')]);
+  const paths=['game.contract.json','package.json','index.html','benchmark.html','src/style.css'];for(const dir of ['src','scripts'])for(const file of await directoryEntries(join(root,dir)))if(file.endsWith('.mjs'))paths.push(dir+'/'+file);const source={};for(const path of paths)source[path]=hash((await readFile(join(root,path),'utf8')).replace(/\r\n/g,'\n'));
+  const soakRun=run(['--jitless','--expose-gc','--max-semi-space-size=1','scripts/soak.mjs','--seed','7','--nights','10','--out',join(pending,'soak.json')]);
+  const soak=await json(join(pending,'soak.json'));assert.equal(soak.crashes,0);assert.equal(soak.results.length,10);assert.ok(soak.mem_end_mb<=1.2*soak.mem_start_mb,'Soak RSS growth exceeds 20%');
+  const gpuBench=await json(join(proof,'bench.json'));assert.equal(gpuBench.contract_version,'1.3');assert.ok(gpuBench.frames>0);assert.ok(gpuBench.avg_fps>=60&&gpuBench.p1_low_fps>=30&&gpuBench.load_ms<=10000,'Local GPU benchmark threshold failed');
+  const benchContext=await json(join(proof,'bench-context.json'));for(const [file,expected]of Object.entries(benchContext.source_sha256))assert.equal(hash((await readFile(join(root,file),'utf8')).replace(/\r\n/g,'\n')),expected,'Benchmark source mismatch: '+file);
+  const summary={soak,soak_elapsed_ms:soakRun.ms,gpu_benchmark:gpuBench,headless_compatible_with_phase_3:true,contract_version:'1.3',node:process.version,platform:process.platform,arch:process.arch,cpu:os.cpus()[0]?.model,
     tests:{total:Number(report.match(/^# tests (\d+)$/m)?.[1]),passed:Number(report.match(/^# pass (\d+)$/m)?.[1]),failed:Number(report.match(/^# fail (\d+)$/m)?.[1])},scenarios:results,campaign_win_fixtures:campaign,
     benchmark:{night:3,ticks:18000,elapsed_ms:benchmark,limit_ms:30000,scenario:'tests/scenarios/phase-3/benchmark.json',note:'Invulnerability keeps gameplay running to dawn; wind disabled so stationary player cannot fall.'},
-    determinism:{identical:true,sha256:hash(a)},source_hash_format:'UTF-8 text with LF line endings',source_sha256:source,visual_qa:{verified:false,fps_720p:null,reason:'Browser rendering, audio and real FPS require a browser check. In-game FPS recorder provided.'}};
+    determinism:{identical:true,sha256:hash(a)},source_hash_format:'UTF-8 text with LF line endings',source_sha256:source,visual_qa:{benchmark_render_verified:true,manual_gameplay_video:true,full_ui_checklist:false,audio_verified:false,reason:'Real benchmark and manual gameplay canvas captured. Not all menus/settings/audio were independently reviewed.'}};
   assert.equal(summary.tests.failed,0);await writeFile(join(pending,'summary.json'),JSON.stringify(summary,null,2)+'\n');
   const {readdir}=await import('node:fs/promises');for(const file of await readdir(pending)){await rm(join(proof,file),{force:true});await rename(join(pending,file),join(proof,file));}await rm(pending,{recursive:true,force:true});
-  console.log(`PASS: ${summary.tests.passed}/${summary.tests.total} tests; ${results.length} headless feature cases; three night win fixtures.`);console.log(`Full 18000 ticks: ${benchmark.map((n)=>n.toFixed(1)+' ms').join(', ')}. Deterministic JSONL verified.`);console.log('Proof: docs/proof/phase-3/ (visual/FPS verification not claimed).');
+  console.log(`PASS: ${summary.tests.passed}/${summary.tests.total} tests; ${results.length} headless feature cases; three night win fixtures.`);console.log(`Full 18000 ticks: ${benchmark.map((n)=>n.toFixed(1)+' ms').join(', ')}. Phase 3 JSONL compatibility verified.`);console.log('Proof: docs/proof/phase-4/ (real GPU bench and manual gameplay video included; full UI/audio review remains separate).');
 }catch(error){console.error(error.stack??error.message);process.exitCode=1;}

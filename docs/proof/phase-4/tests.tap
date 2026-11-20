@@ -1,0 +1,484 @@
+TAP version 13
+# Subtest: fuel uses exact integer quanta: decay, extinction, ever_lit and no construction credit
+ok 1 - fuel uses exact integer quanta: decay, extinction, ever_lit and no construction credit
+  ---
+  duration_ms: 29.5497
+  type: 'test'
+  ...
+# Subtest: first light costs ten; partial relight costs five, resets oil, raises capacity and scores 40
+ok 2 - first light costs ten; partial relight costs five, resets oil, raises capacity and scores 40
+  ---
+  duration_ms: 14.9542
+  type: 'test'
+  ...
+# Subtest: refuel uses ceil of exact deficit, clamps 100, awards only consumed motes and emits refuel
+ok 3 - refuel uses ceil of exact deficit, clamps 100, awards only consumed motes and emits refuel
+  ---
+  duration_ms: 0.5052
+  type: 'test'
+  ...
+# Subtest: interaction filters full oil, then nearest receptive lamp and id; decay precedes interaction
+ok 4 - interaction filters full oil, then nearest receptive lamp and id; decay precedes interaction
+  ---
+  duration_ms: 0.5352
+  type: 'test'
+  ...
+# Subtest: extinction before interaction permits relight on that very tick
+ok 5 - extinction before interaction permits relight on that very tick
+  ---
+  duration_ms: 0.2826
+  type: 'test'
+  ...
+# Subtest: capacity increases per successful lighting, clamps twenty, scenario lights do not count, resets each night
+ok 6 - capacity increases per successful lighting, clamps twenty, scenario lights do not count, resets each night
+  ---
+  duration_ms: 1.1528
+  type: 'test'
+  ...
+# Subtest: safe zone is inclusive at exactly 30 real fuel, absent below even when snapshot rounds to 30
+ok 7 - safe zone is inclusive at exactly 30 real fuel, absent below even when snapshot rounds to 30
+  ---
+  duration_ms: 0.6902
+  type: 'test'
+  ...
+# Subtest: wander chooses nearest weak lit lamp over off lamps, ties by id; chase keeps player target
+ok 8 - wander chooses nearest weak lit lamp over off lamps, ties by id; chase keeps player target
+  ---
+  duration_ms: 0.5353
+  type: 'test'
+  ...
+# Subtest: drain is stationary; two shades stack with natural decay and report each sixty drain ticks
+ok 9 - drain is stationary; two shades stack with natural decay and report each sixty drain ticks
+  ---
+  duration_ms: 1.575
+  type: 'test'
+  ...
+# Subtest: drain stops for player within six, stale or remote targets; stunned recovers to wander
+ok 10 - drain stops for player within six, stale or remote targets; stunned recovers to wander
+  ---
+  duration_ms: 0.5146
+  type: 'test'
+  ...
+# Subtest: refuel restoring safe radius evacuates draining shade by tick thirty without damage
+ok 11 - refuel restoring safe radius evacuates draining shade by tick thirty without damage
+  ---
+  duration_ms: 0.4974
+  type: 'test'
+  ...
+# Subtest: safety restoration at exactly thirty completes evacuation even when oil falls below thirty next tick
+ok 12 - safety restoration at exactly thirty completes evacuation even when oil falls below thirty next tick
+  ---
+  duration_ms: 0.3059
+  type: 'test'
+  ...
+# Subtest: safety evacuation also meets thirty-tick deadline during sixty-tick recoil
+ok 13 - safety evacuation also meets thirty-tick deadline during sixty-tick recoil
+  ---
+  duration_ms: 0.4998
+  type: 'test'
+  ...
+# Subtest: pulse awards total fifteen for a pre-pulse drainer, five for every other shade
+ok 14 - pulse awards total fifteen for a pre-pulse drainer, five for every other shade
+  ---
+  duration_ms: 0.4836
+  type: 'test'
+  ...
+# Subtest: pause freezes oil, drain cadence, capacity and time
+ok 15 - pause freezes oil, drain cadence, capacity and time
+  ---
+  duration_ms: 0.2251
+  type: 'test'
+  ...
+# Subtest: dawn thresholds are 3/5, 4/6, 5/7; final fuel floors and flame bonuses only on win
+ok 16 - dawn thresholds are 3/5, 4/6, 5/7; final fuel floors and flame bonuses only on win
+  ---
+  duration_ms: 1.1286
+  type: 'test'
+  ...
+# Subtest: final tick sees oil-out, relight and lethal fall before evaluating dawn
+ok 17 - final tick sees oil-out, relight and lethal fall before evaluating dawn
+  ---
+  duration_ms: 0.2978
+  type: 'test'
+  ...
+# Subtest: scenario defaults and new v1.2 fields validate bounds and deterministic fuel precision
+ok 18 - scenario defaults and new v1.2 fields validate bounds and deterministic fuel precision
+  ---
+  duration_ms: 0.7511
+  type: 'test'
+  ...
+# Subtest: standard tuning v1.3, durations and score constants are exact
+ok 19 - standard tuning v1.3, durations and score constants are exact
+  ---
+  duration_ms: 0.2
+  type: 'test'
+  ...
+# Subtest: three standard maps have correct lamps, spawn sets and no initial shades
+ok 20 - three standard maps have correct lamps, spawn sets and no initial shades
+  ---
+  duration_ms: 0.5414
+  type: 'test'
+  ...
+# Subtest: regression: origin tick zero, five lamps, no construction rewards
+ok 21 - regression: origin tick zero, five lamps, no construction rewards
+  ---
+  duration_ms: 0.1286
+  type: 'test'
+  ...
+# Subtest: regression: camera movement, six metres per second, diagonal normalization
+ok 22 - regression: camera movement, six metres per second, diagonal normalization
+  ---
+  duration_ms: 2.5283
+  type: 'test'
+  ...
+# Subtest: regression: omitted fields persist and stopping is immediate
+ok 23 - regression: omitted fields persist and stopping is immediate
+  ---
+  duration_ms: 0.3387
+  type: 'test'
+  ...
+# Subtest: regression: jump uses 7/-20, full air control, held jump does not repeat
+ok 24 - regression: jump uses 7/-20, full air control, held jump does not repeat
+  ---
+  duration_ms: 0.9317
+  type: 'test'
+  ...
+# Subtest: regression: pickup radius/capacity plus the new height bound; pickup gives no score
+ok 25 - regression: pickup radius/capacity plus the new height bound; pickup gives no score
+  ---
+  duration_ms: 0.2422
+  type: 'test'
+  ...
+# Subtest: regression: deposit remaining cost, partial progress and held input edges
+ok 26 - regression: deposit remaining cost, partial progress and held input edges
+  ---
+  duration_ms: 0.3017
+  type: 'test'
+  ...
+# Subtest: regression: nearest unlit lamp wins; equal distance resolves by id
+ok 27 - regression: nearest unlit lamp wins; equal distance resolves by id
+  ---
+  duration_ms: 0.1968
+  type: 'test'
+  ...
+# Subtest: new order: pickup and deposit before pulse (insufficient remainder prevents pulse)
+ok 28 - new order: pickup and deposit before pulse (insufficient remainder prevents pulse)
+  ---
+  duration_ms: 0.2169
+  type: 'test'
+  ...
+# Subtest: dash: 14 m/s for exactly 12 ticks, held button cannot retrigger
+ok 29 - dash: 14 m/s for exactly 12 ticks, held button cannot retrigger
+  ---
+  duration_ms: 0.7412
+  type: 'test'
+  ...
+# Subtest: dash follows movement/facing, freezes airborne height, does not give invulnerability
+ok 30 - dash follows movement/facing, freezes airborne height, does not give invulnerability
+  ---
+  duration_ms: 0.4684
+  type: 'test'
+  ...
+# Subtest: pulse: exact 3D radius at foot+0.8, spend three and push four over fifteen ticks
+ok 31 - pulse: exact 3D radius at foot+0.8, spend three and push four over fifteen ticks
+  ---
+  duration_ms: 1.0155
+  type: 'test'
+  ...
+# Subtest: pulse refreshes stunned targets and cannot activate with insufficient light or held input
+ok 32 - pulse refreshes stunned targets and cannot activate with insufficient light or held input
+  ---
+  duration_ms: 1.6927
+  type: 'test'
+  ...
+# Subtest: stun expires on the exact 120 tick boundary
+ok 33 - stun expires on the exact 120 tick boundary
+  ---
+  duration_ms: 1.3519
+  type: 'test'
+  ...
+# Subtest: shades chase at 4 m/s (4.5 at night 3), detect 12 and forget 18
+ok 34 - shades chase at 4 m/s (4.5 at night 3), detect 12 and forget 18
+  ---
+  duration_ms: 2.3379
+  type: 'test'
+  ...
+# Subtest: shade hit drops floor(carried/2), no pickup in that step, recoil and immunity
+ok 35 - shade hit drops floor(carried/2), no pickup in that step, recoil and immunity
+  ---
+  duration_ms: 1.889
+  type: 'test'
+  ...
+# Subtest: shade touch respects vertical limit and recoil pushes a total of two metres
+ok 36 - shade touch respects vertical limit and recoil pushes a total of two metres
+  ---
+  duration_ms: 0.5075
+  type: 'test'
+  ...
+# Subtest: safe radius blocks outside shades, evacuates insiders in 30 ticks
+ok 37 - safe radius blocks outside shades, evacuates insiders in 30 ticks
+  ---
+  duration_ms: 1.2284
+  type: 'test'
+  ...
+# Subtest: dropped motes expire after 480 simulation ticks and can be picked before expiration
+ok 38 - dropped motes expire after 480 simulation ticks and can be picked before expiration
+  ---
+  duration_ms: 2.9569
+  type: 'test'
+  ...
+# Subtest: fall bypasses invulnerability, loses all light, waits 60 ticks and respawns once
+ok 39 - fall bypasses invulnerability, loses all light, waits 60 ticks and respawns once
+  ---
+  duration_ms: 0.5234
+  type: 'test'
+  ...
+# Subtest: fall with last flame ends immediately without respawning
+ok 40 - fall with last flame ends immediately without respawning
+  ---
+  duration_ms: 0.2628
+  type: 'test'
+  ...
+# Subtest: pause advances tick only; freezes timers, ttl, spawns and position
+ok 41 - pause advances tick only; freezes timers, ttl, spawns and position
+  ---
+  duration_ms: 0.469
+  type: 'test'
+  ...
+# Subtest: mote schedule: 20 unique initially, one at tick 240, no free point means skip
+ok 42 - mote schedule: 20 unique initially, one at tick 240, no free point means skip
+  ---
+  duration_ms: 26.0149
+  type: 'test'
+  ...
+# Subtest: new spawn cannot interact in its birth tick
+ok 43 - new spawn cannot interact in its birth tick
+  ---
+  duration_ms: 3.9803
+  type: 'test'
+  ...
+# Subtest: standard spawn caps hold in all three nights and motes cap at thirty
+ok 44 - standard spawn caps hold in all three nights and motes cap at thirty
+  ---
+  duration_ms: 252.9216
+  type: 'test'
+  ...
+# Subtest: dash becomes available exactly 90 ticks after starting, not one tick early
+ok 45 - dash becomes available exactly 90 ticks after starting, not one tick early
+  ---
+  duration_ms: 1.0632
+  type: 'test'
+  ...
+# Subtest: shade schedule: two at 300, one at 780; canonical spawning state and unique ids
+ok 46 - shade schedule: two at 300, one at 780; canonical spawning state and unique ids
+  ---
+  duration_ms: 3.4
+  type: 'test'
+  ...
+# Subtest: scenario flags disable schedules; explicit ids do not collide
+ok 47 - scenario flags disable schedules; explicit ids do not collide
+  ---
+  duration_ms: 5.0717
+  type: 'test'
+  ...
+# Subtest: night 2 bridge surface is exactly four metres wide; pads launch to the other island
+ok 48 - night 2 bridge surface is exactly four metres wide; pads launch to the other island
+  ---
+  duration_ms: 0.9063
+  type: 'test'
+  ...
+# Subtest: launch pad allows dash while retaining flight and resumes launch afterwards
+ok 49 - launch pad allows dash while retaining flight and resumes launch afterwards
+  ---
+  duration_ms: 0.1627
+  type: 'test'
+  ...
+# Subtest: night 3 tiers, ramps, walls and tower are physical, not visual only
+ok 50 - night 3 tiers, ramps, walls and tower are physical, not visual only
+  ---
+  duration_ms: 0.6735
+  type: 'test'
+  ...
+# Subtest: night 3 launch pad reaches tier two; walking off tiers falls down
+ok 51 - night 3 launch pad reaches tier two; walking off tiers falls down
+  ---
+  duration_ms: 0.59
+  type: 'test'
+  ...
+# Subtest: drifter detects carried>=5 within 15, otherwise idles at 2 m/s
+ok 52 - drifter detects carried>=5 within 15, otherwise idles at 2 m/s
+  ---
+  duration_ms: 0.6657
+  type: 'test'
+  ...
+# Subtest: drifter steals once before shade hit; immunity and safe zones do not prevent theft
+ok 53 - drifter steals once before shade hit; immunity and safe zones do not prevent theft
+  ---
+  duration_ms: 0.6259
+  type: 'test'
+  ...
+# Subtest: pulse repels chasing drifter before theft; fleeing thief drops all and leaves after 120 ticks
+ok 54 - pulse repels chasing drifter before theft; fleeing thief drops all and leaves after 120 ticks
+  ---
+  duration_ms: 1.256
+  type: 'test'
+  ...
+# Subtest: drifter flee timeout is 240; scheduled spawns occur at 1200 and cap at two
+ok 55 - drifter flee timeout is 240; scheduled spawns occur at 1200 and cap at two
+  ---
+  duration_ms: 12.6617
+  type: 'test'
+  ...
+# Subtest: charm pickup lasts 600 ticks, speed 7.2 and respawns at 2700
+ok 56 - charm pickup lasts 600 ticks, speed 7.2 and respawns at 2700
+  ---
+  duration_ms: 7.8684
+  type: 'test'
+  ...
+# Subtest: charm dash has no cooldown but still requires edges and ignores presses during dash
+ok 57 - charm dash has no cooldown but still requires edges and ignores presses during dash
+  ---
+  duration_ms: 0.3995
+  type: 'test'
+  ...
+# Subtest: a new charm refreshes an existing buff even with a full carried inventory
+ok 58 - a new charm refreshes an existing buff even with a full carried inventory
+  ---
+  duration_ms: 0.1435
+  type: 'test'
+  ...
+# Subtest: wind warns 120 ticks, pushes 2 m/s for 300 ticks, disabled flag is respected
+ok 59 - wind warns 120 ticks, pushes 2 m/s for 300 ticks, disabled flag is respected
+  ---
+  duration_ms: 12.4674
+  type: 'test'
+  ...
+# Subtest: replaced early-win rule: all lamps lit stays playing, no time bonus; no-flames beats dawn
+ok 60 - replaced early-win rule: all lamps lit stays playing, no time bonus; no-flames beats dawn
+  ---
+  duration_ms: 0.4728
+  type: 'test'
+  ...
+# Subtest: last lamp at dawn wins if alive; zero time or zero flames otherwise loses
+ok 61 - last lamp at dawn wins if alive; zero time or zero flames otherwise loses
+  ---
+  duration_ms: 0.2176
+  type: 'test'
+  ...
+# Subtest: scenario replacement, mandatory snapshot arrays, stable ids and seed determinism
+ok 62 - scenario replacement, mandatory snapshot arrays, stable ids and seed determinism
+  ---
+  duration_ms: 13.312
+  type: 'test'
+  ...
+# Subtest: invalid frames, new scenario fields and night-specific ids are validated
+ok 63 - invalid frames, new scenario fields and night-specific ids are validated
+  ---
+  duration_ms: 0.6237
+  type: 'test'
+  ...
+# Subtest: CLI v1.2: all nights, tick zero/one, pause snapshots, deterministic bytes and errors
+ok 64 - CLI v1.2: all nights, tick zero/one, pause snapshots, deterministic bytes and errors
+  ---
+  duration_ms: 510.8942
+  type: 'test'
+  ...
+# Subtest: campaign follows all three nights and only counts won nights
+ok 65 - campaign follows all three nights and only counts won nights
+  ---
+  duration_ms: 4.4963
+  type: 'test'
+  ...
+# Subtest: retrying a lost night preserves earlier wins and resets current credit
+ok 66 - retrying a lost night preserves earlier wins and resets current credit
+  ---
+  duration_ms: 0.3068
+  type: 'test'
+  ...
+# Subtest: volume/sensitivity/creative preferences survive storage reload, clamp invalid values
+ok 67 - volume/sensitivity/creative preferences survive storage reload, clamp invalid values
+  ---
+  duration_ms: 2.718
+  type: 'test'
+  ...
+# Subtest: FPS meter excludes warmup/paused intervals and only passes complete 720p measurements
+ok 68 - FPS meter excludes warmup/paused intervals and only passes complete 720p measurements
+  ---
+  duration_ms: 1.8634
+  type: 'test'
+  ...
+# Subtest: ticket colour palette matches exact hex values
+ok 69 - ticket colour palette matches exact hex values
+  ---
+  duration_ms: 0.4875
+  type: 'test'
+  ...
+# Subtest: v1.3 adds executable benchmark and bounded-memory soak commands, gameplay tuning is unchanged
+ok 70 - v1.3 adds executable benchmark and bounded-memory soak commands, gameplay tuning is unchanged
+  ---
+  duration_ms: 3.6386
+  type: 'test'
+  ...
+# Subtest: standard benchmark freezes fuel/player/end/spawns, but moves exactly 200 wander shades with 100 motes
+ok 71 - standard benchmark freezes fuel/player/end/spawns, but moves exactly 200 wander shades with 100 motes
+  ---
+  duration_ms: 670.0554
+  type: 'test'
+  ...
+# Subtest: orbit is CCW from +X with radius30 Y15 period15; frame statistics follow ticket formula
+ok 72 - orbit is CCW from +X with radius30 Y15 period15; frame statistics follow ticket formula
+  ---
+  duration_ms: 0.3418
+  type: 'test'
+  ...
+# Subtest: all nine actions rebind, reject conflicts, survive reload and recover malformed settings
+ok 73 - all nine actions rebind, reject conflicts, survive reload and recover malformed settings
+  ---
+  duration_ms: 0.8603
+  type: 'test'
+  ...
+# Subtest: leaderboard validates names, ranks scores/time and keeps only ten with exact fields
+ok 74 - leaderboard validates names, ranks scores/time and keeps only ten with exact fields
+  ---
+  duration_ms: 1.1324
+  type: 'test'
+  ...
+# Subtest: disk leaderboard survives server restart, serializes concurrent writes and CLI export matches
+ok 75 - disk leaderboard survives server restart, serializes concurrent writes and CLI export matches
+  ---
+  duration_ms: 251.7572
+  type: 'test'
+  ...
+# Subtest: CPU scene construction/update for all standard maps, without claiming GPU render
+ok 76 - CPU scene construction/update for all standard maps, without claiming GPU render
+  ---
+  duration_ms: 53.7568
+  type: 'test'
+  ...
+# Subtest: CPU scene responds to real lamp and pulse events, including new enemy models
+ok 77 - CPU scene responds to real lamp and pulse events, including new enemy models
+  ---
+  duration_ms: 15.7316
+  type: 'test'
+  ...
+# Subtest: CPU fuel bar, non-colour lamp shape/tear, threshold and one-Hz blink follow simulation
+ok 78 - CPU fuel bar, non-colour lamp shape/tear, threshold and one-Hz blink follow simulation
+  ---
+  duration_ms: 11.1896
+  type: 'test'
+  ...
+# Subtest: CPU colour accessibility changes shade eyes and edge; enabling it cannot change headless state
+ok 79 - CPU colour accessibility changes shade eyes and edge; enabling it cannot change headless state
+  ---
+  duration_ms: 10.1152
+  type: 'test'
+  ...
+1..79
+# tests 79
+# suites 0
+# pass 79
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1093.9125

@@ -1,0 +1,29 @@
+{
+  "seed": 42,
+  "duration_s": 30,
+  "warmup_s": 3,
+  "width": 1280,
+  "height": 720,
+  "node": "v24.22.3",
+  "created_at": "2026-11-20T10:09:12.534Z",
+  "environment": {
+    "hidden_frames": 0,
+    "unfocused_frames": 0,
+    "visibility_changes": []
+  },
+  "source_sha256": {
+    "game.contract.json": "6632f83f499d6a67ed514ad78e259c6b91e04f65560f0977466e9f4762d7c4d3",
+    "benchmark.html": "3acea3c3f829bbd7ae7dc785ae70a9784995321d676686ca11e8fcd05d96b419",
+    "src/benchmark.mjs": "cdabe3198ed3273874647351ccdcaccdd2f01f129d34fd00abddb0fc3b6a98bd",
+    "src/bench-browser.mjs": "65344def9fec365e32178bc021006c3110d0ac28ddfbbac872a9791912ee93f7",
+    "src/view.mjs": "7dbcfbae540207c0f1bbb6c86288ac4a8c00e38a5eb963993987242bdadd1690",
+    "src/game.mjs": "2d1b2ae5bc5fa099cc733352b0fa743b0717012650743a403658ebda83eb49b9",
+    "src/levels.mjs": "58e28acceb0d30255d6831bba23c0bcd287f6d315809bd45871f0654a55f0c81",
+    "src/rules.mjs": "b76e9c85c92c4bb52ffb33c489a24d0b88fabf63e0aaf9655fa841d1e964f9f1",
+    "src/validation.mjs": "17c726e49fae6d2648c887296846f0fa53d780c174d78023e0a8257064ef99d8",
+    "vendor/three.module.js": "ce1fa418de16a19495a9f72495580e3015d7745c296d3ce0485897f902ddedfb",
+    "scripts/bench.mjs": "dfd6e06ef9903b31ff6c64ffeb2f2ae79e34d43966ab0e4d73de38d2faf8c1f1",
+    "scripts/server.mjs": "2aaf46a3926f3e1aa723de093fe6fe7a46fa0cbf55b359387ebd4f91a8f4ab10"
+  },
+  "sample_rule": "Whole frames within the 30s measurement window; warmup and crossing-boundary frames excluded. No outlier filtering."
+}

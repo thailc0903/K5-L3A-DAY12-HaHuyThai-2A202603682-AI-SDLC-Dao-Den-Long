@@ -1,12 +1,16 @@
-# Đảo Đèn Lồng — Phase 3
+# Đảo Đèn Lồng — v1.0.0 / Phase 4
 
-Game 3D góc nhìn thứ ba qua ba Đêm: Đảo Bến, Đảo Cầu Tre, Đảo Tháp Chuông. Điều khiển Mây gom đom đóm, thắp/châm dầu và **giữ đảo sáng tới bình minh**. Triển khai PRD-0 + Ticket-02 + Ticket-03, Test Contract **v1.2**.
+[Xem/tải video demo MP4 dưới 5 phút](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/releases/download/v1.0.0/demo.mp4) · [Bản phát hành](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0)
+
+![Khung hình game thật, có HUD ghi khi người học chơi trực tiếp](../proof/phase-4/game-scene.png)
+
+Game 3D góc nhìn thứ ba qua ba Đêm: Đảo Bến, Đảo Cầu Tre, Đảo Tháp Chuông. Điều khiển Mây gom đom đóm, thắp/châm dầu và **giữ đảo sáng tới bình minh**. Triển khai PRD-0 + Ticket-02/03/04, Test Contract **v1.3**.
 
 README gốc và các tài liệu lab được giữ nguyên theo lựa chọn người học. Đây là hướng dẫn sản phẩm; mọi lệnh dưới đây chạy từ **gốc repo**.
 
 ## Cài và chạy trong 3 lệnh
 
-Điều kiện: Node.js 20+ trong PATH và trình duyệt hỗ trợ WebGL2. Chạy macOS/Linux/Windows; không cần npm install, tài khoản hoặc Internet sau clone vì Three.js đã đi kèm.
+Điều kiện: Node.js20+ trong PATH, Git để clone, trình duyệt hỗ trợ WebGL2 và màn hình1280×720 trở lên. Benchmark dùng Chrome/Edge/Chromium; có thể chọn executable bằng BENCH_BROWSER. Không cần npm install, tài khoản hoặc Internet sau clone vì Three.js đã đi kèm. Đã kiểm tra trên Windows11/Node24; CI dùng Linux/Node20. Chưa thử macOS, chưa xác lập CPU/GPU/RAM tối thiểu. Cấu hình máy tham khảo ở [machine.json](../proof/phase-4/machine.json), không phải cấu hình máy chấm.
 
 ```sh
 git clone https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long.git dao-den-long
@@ -14,7 +18,9 @@ cd dao-den-long
 node scripts/serve.mjs
 ```
 
-Mở http://127.0.0.1:4173 và chọn Bắt đầu hành trình. Nếu đã mở bản cũ, tải lại trang để nhận luật và giao diện mới. Dừng server bằng Ctrl+C. Đổi biến môi trường PORT nếu cổng bận.
+Mở http://127.0.0.1:4173 và chọn Bắt đầu hành trình. Nếu đã chạy server bản cũ, dừng bằng Ctrl+C rồi chạy lại lệnh server, tải lại trang. Đổi PORT nếu cổng bận.
+
+Hoặc tải ZIP trong Release, giải nén và chạy `node scripts/serve.mjs` trong thư mục dao-den-long; START-HERE.txt có chỉ dẫn. Node không nằm trong ZIP, cần cài sẵn. Kiểm tra SHA256SUMS.txt nếu muốn xác nhận file tải.
 
 Máy Windows hiện tại có thể dùng `./play.ps1` trong PowerShell: script tìm Node trên PATH hoặc runtime Codex sẵn có, không cài đặt hoặc đổi cấu hình máy.
 
@@ -54,11 +60,23 @@ Ví dụ thắp lại ngay tick bình minh cần5: +25+40. Nếu cuối tick có
 
 Cài đặt ở menu hoặc pause có âm lượng, độ nhạy chuột và **Bảng màu dễ phân biệt**; lưu localStorage trên trình duyệt. Chế độ dễ phân biệt đổi mắt/viền Bóng Mực sang xanh #00B3FF, cảnh báo UI trắng kèm⚠. Đèn tắt xẹp20% và giấy rách; đèn yếu nhấp nháy, không cần màu để phân biệt. Âm thanh procedural gốc gồm nhạc đêm và SFX theo hành động; được mở sau thao tác bắt đầu chơi.
 
+**Đổi phím:** chọn một trong9 hành động trong Cài đặt, bấm phím mới; trùng phím báo lỗi, không ghi đè. Có Khôi phục mặc định, HUD theo phím mới. Arrow/P/Shift phải vẫn là alias mặc định khi chưa được gán sang hành động khác. Giảm chuyển động tắt các hiệu ứng pulse/hạt/bobbing và CSS nhấp nháy; không có rung camera/chớp toàn màn. Chữ tối thiểu18px tại1280×720, tùy chọn Chữ lớn×1.25. Bóng Mực xuất hiện có mũi tên/chữ5s ở mép màn, gió báo trước2s,10s cuối và đèn ít dầu có chữ cảnh báo.
+
+## Bảng xếp hạng trên đĩa
+
+Sau thua bất kỳ Đêm hoặc Bình Minh (thắng Đêm3), nhập tên3–12 ký tự A–Z/a–z/0–9/_. Lưu tổng điểm các Đêm đã thắng, nights_won, ngày ISO UTC và seed. Menu có Bảng xếp hạng top10; hòa điểm xếp người đạt trước. File `.local/leaderboard.json` còn sau khi đóng game/server và không được commit vào repo. Xóa file này sẽ xóa điểm cục bộ; có thể chọn đường dẫn bằng LEADERBOARD_PATH.
+
+```sh
+node scripts/serve.mjs --export-leaderboard out.json
+```
+
+Lệnh xuất rồi thoát; không cần server đang chạy. Bản ZIP vẫn cần Node server để lưu điểm, không mở index.html trực tiếp bằng file://.
+
 ### Sáng tạo của tôi
 
 **Dải sao dẫn bình minh**: đèn thắp thêm sao và đường nối trên bầu trời, hạt vàng quanh đèn, âm sắc riêng theo tiến độ. Tắt bằng tùy chọn trong Cài đặt hoặc mở http://127.0.0.1:4173/?creative=0. Phần này chỉ ở view/audio, không thêm thực thể, điểm, event hoặc RNG gameplay. Headless không import chúng.
 
-CPU scene tests xác nhận có thể bật/tắt và dựng ba map; kiểm chứng logic/headless vẫn tất định. Chưa có ảnh hoặc đo GPU thực, nên không tuyên bố visual/FPS đã đạt.
+CPU scene tests xác nhận có thể bật/tắt và dựng ba map; kiểm chứng logic/headless vẫn tất định. Benchmark và soak chuẩn tắt sáng tạo; ảnh benchmark và video gameplay thật có trong bằng chứng Phase4.
 
 ## Kiểm chứng và headless
 
@@ -84,20 +102,33 @@ node scripts/headless.mjs --seed 12 --night 1 --ticks 120 --scenario tests/scena
 
 Snapshot tick0 trước input, có event night_start tại0; bước k dùng input k tạo trạng thái k+1. Khi paused, tick tăng và sim_tick đứng yên. Dòng cuối luôn là end. JSON/shape đầu vào sai trả exit2, thông báo stderr; chạy hợp lệ exit0; lỗi chạy khác nonzero.
 
-Manifest `tests/scenarios/phase-3/cases.json` có9 scenario mới; verify cũng chạy lại9 scenario Phase2 còn hiệu lực. Gate còn chạy fixture thắng bình minh từng Đêm, test chiến dịch/cài đặt và hai lần18.000 bước để so byte/đo thời gian. Bằng chứng ở [docs/proof/phase-3](../proof/phase-3/README.md); bằng chứng Phase1–2 giữ nguyên, chạy bằng mã tại tag lịch sử tương ứng.
+Manifest `tests/scenarios/phase-3/cases.json` có9 scenario dầu; verify cũng chạy lại9 scenario Phase2 còn hiệu lực. Gate chạy79 test, fixture thắng từng Đêm, hai lần18.000 bước, so byte24JSONL với Phase3, soak và kiểm tra video/hash benchmark đã lưu. Bằng chứng ở [docs/proof/phase-4](../proof/phase-4/README.md). Gate CI kiểm tra số đo đã commit; không tự nhận CI có GPU hay chạy lại benchmark cửa sổ.
 
-## Đo FPS thật ở 1280×720
+## Benchmark chuẩn và soak
+
+```sh
+node scripts/bench.mjs --seed 42 --duration 30 --out bench.json
+node --jitless --expose-gc --max-semi-space-size=1 scripts/soak.mjs --seed 7 --nights 10 --out soak.json
+```
+
+Benchmark tự mở cửa sổ app1280×720, Đêm1 với200 Bóng Mực wander,100 đom đóm, L1–L3 sáng/fuel100. Player đứng gốc, camera vòng15s, tắt sinh/hit/nhặt/hao dầu/end; sáng tạo tắt. Giữ cửa sổ hiện: warmup3s rồi đo30s, tự đóng/exit0. Không có API WebGL chuẩn để tắt vsync, vì vậy `vsync_off:false`; RSS renderer web không đọc tin cậy nên `peak_mem_mb:null`, không thay bằng JS heap. Có bench-context.json/hash và bench-scene.png cùng thư mục output. Chỉ số avg/1%low/p95/load đúng định nghĩa ở [thiết kế Phase4](../notes/phase-4-release.md).
+
+Soak chạy10Đêm liên tiếp cùng tiến trình, vòng1→2→3, seed7+i (i từ0); input ngẫu nhiên đúng xác suất ticket, reset cuối rồi lấy RSS. Cờ Node công khai giảm chi phí JIT/young heap và chạy GC ở hai ranh giới RSS; không pad baseline. Test này đo Node headless, không đo rò bộ nhớ WebGL. Ngưỡng:0crash và RSS cuối≤120%đầu. Số đo thật trong bench.json/soak.json ở bằng chứng; máy chấm cần đo lại trên cấu hình giảng viên.
+
+## Đo FPS khi chơi và ghi demo
 
 1. Nhấn Đo FPS720p ở góc dưới trái (hoặc mở `?benchmark=1`). Drawing buffer chuyển đúng1280×720, pixel ratio1.
 2. Chơi ở tab đang hiện: warmup3 s, sau đó đủ30 s đo. Pause/ẩn tab không tính vào số đo.
-3. Nhấn Lưu kết quả FPS, đặt file JSON thật vào docs/proof/phase-3/ cùng cấu hình máy/ảnh. `passes` chỉ true khi đo đủ, đúng độ phân giải và trung bình ≥30 FPS. Không sửa số.
+3. Nhấn Lưu kết quả FPS. Đây là bộ đo khi chơi giữ từPhase2 (ngưỡng30FPS), **không thay thế benchmark chuẩn200 Bóng Mực** ở trên.
 
-**Hiện chưa có kết quả FPS/WebGL/âm thanh do công cụ browser host không khả dụng.** Tests scene dùng backend CPU không vẽ, không phải thay thế bước này. Số đo headless CPU có trong summary.json.
+Ghi video bằng “Ghi demo game” → chơi → “Dừng và lưu”, tối đa4phút; Chrome hiện tại xuất MP4/H.264, browser không hỗ trợ sẽ xuất WebM để chuyển định dạng trước nộp. Chỉ canvas + HUD/số đo đã sinh được ghi, không desktop/âm thanh. `node scripts/demo.mjs` mở cửa sổ riêng và tự lưu video/ảnh vào docs khi người học bấm nút; lệnh này cần giao diện desktop. Video nộp đã được người học quay trực tiếp, có cấu trúc/thời lượng MP4 kiểm tra bằng `node scripts/video-check.mjs`.
+
+Đã có benchmark GPU và gameplay thật; chưa xác nhận toàn bộ menu/settings/camera/âm thanh trên mọi máy. Tests scene dùng backend CPU không vẽ, không thay cho review bằng mắt/nghe độc lập.
 
 ## Harness và bàn giao
 
-[AGENTS.md](../../AGENTS.md), script verify và workflow được cập nhật cho Phase3. Hook bật sau khi Node có PATH bằng `git config core.hooksPath .githooks`; CI Ubuntu chỉ coi là đạt khi có run thật xanh. Các test cũ đổi luật có lý do ở [phase-3-changes.md](../notes/phase-3-changes.md). Nhật ký AI/token/giới hạn ở [phase-3-ai-log.md](../notes/phase-3-ai-log.md). [Changelog](../../CHANGELOG.md) liệt kê breaking changes.
+[AGENTS.md](../../AGENTS.md), script verify và workflow dùng Contract1.3. Hook bật sau khi Node có PATH bằng `git config core.hooksPath .githooks`; CI Ubuntu chỉ coi là đạt khi có run thật xanh. Phase4 chỉ cập nhật assertion version và thêm test, không skip các test cũ. Game/tuning v1.2 và output headless giữ nguyên. [Changelog](../../CHANGELOG.md), [thiết kế/giới hạn](../notes/phase-4-release.md), [retro bốn phase/token](../notes/RETRO.md).
 
-Giữ tag phase-1/phase-2; bàn giao mới bằng phase-3. Chưa tạo Release v1.0.0/video cuối vì thuộc Phase4. Hạn tag theo Coach, chưa có mốc giờ để xác nhận đúng hạn. Người học cần review độc lập và kiểm tra checklist UI trong bằng chứng.
+Giữ tag phase-1/phase-2/phase-3; bàn giao bằng phase-4 và Releasev1.0.0. Có ZIP chạy offline sau khi tải và cài Node, video MP4, bench/soak. Hạn tag theo Coach, chưa có mốc giờ để xác nhận đúng hạn. Người học cần review độc lập và kiểm tra checklist UI trong bằng chứng. README lab ở gốc được giữ nguyên theo lựa chọn đã xác nhận ở Phase4.
 
 Giấy phép và nguồn: [CREDITS.md](../../CREDITS.md), [LICENSE](../../LICENSE), vendor/THREE-LICENSE.txt. Không có API key hoặc dịch vụ tài khoản trong game.

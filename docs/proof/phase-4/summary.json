@@ -1,0 +1,342 @@
+{
+  "soak": {
+    "nights": 10,
+    "crashes": 0,
+    "results": [
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost",
+      "lost"
+    ],
+    "mem_start_mb": 37.7734375,
+    "mem_end_mb": 39.62890625,
+    "duration_s": 2.3456536999999997
+  },
+  "soak_elapsed_ms": 2418.2379,
+  "gpu_benchmark": {
+    "contract_version": "1.3",
+    "avg_fps": 140.76948205630788,
+    "p1_low_fps": 71.51172459670582,
+    "frame_ms_p95": 7.100000000000364,
+    "frames": 4223,
+    "load_ms": 962.22705078125,
+    "peak_mem_mb": null,
+    "vsync_off": false,
+    "renderer": "Three.js r170 / WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "os": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/127.0.0.0 Safari/537.36"
+  },
+  "headless_compatible_with_phase_3": true,
+  "contract_version": "1.3",
+  "node": "v24.22.3",
+  "platform": "win32",
+  "arch": "x64",
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+  "tests": {
+    "total": 79,
+    "passed": 79,
+    "failed": 0
+  },
+  "scenarios": [
+    {
+      "name": "dash",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 12,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 51.76729999999998
+    },
+    {
+      "name": "pause",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 62,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 56.291999999999916
+    },
+    {
+      "name": "drifter-steal",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 53.01720000000023
+    },
+    {
+      "name": "drifter-drop",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 121,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 57.94349999999986
+    },
+    {
+      "name": "charm",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 30,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 59.38969999999972
+    },
+    {
+      "name": "fall",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 61,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 76.51200000000017
+    },
+    {
+      "name": "pad",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 84,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 54.19770000000017
+    },
+    {
+      "name": "tiers",
+      "night": 3,
+      "end": {
+        "type": "end",
+        "ticks": 60,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 55.63229999999976
+    },
+    {
+      "name": "wind",
+      "night": 3,
+      "end": {
+        "type": "end",
+        "ticks": 2100,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 65.84339999999975
+    },
+    {
+      "name": "oil-out",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 6000,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 77.91969999999992
+    },
+    {
+      "name": "refuel",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 15
+      },
+      "verified": true,
+      "elapsed_ms": 56.33339999999998
+    },
+    {
+      "name": "relight",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 65
+      },
+      "verified": true,
+      "elapsed_ms": 56.885699999999815
+    },
+    {
+      "name": "drain",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 120,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 68.12310000000025
+    },
+    {
+      "name": "drain-pulse",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 20
+      },
+      "verified": true,
+      "elapsed_ms": 64.13429999999971
+    },
+    {
+      "name": "safe-restored",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 30,
+        "state": "playing",
+        "score": 15
+      },
+      "verified": true,
+      "elapsed_ms": 56.0665999999992
+    },
+    {
+      "name": "no-early-win",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 60,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 55.951500000000124
+    },
+    {
+      "name": "dawn-loss-oil",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "lost",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 59.47789999999986
+    },
+    {
+      "name": "dawn-win-relight",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 663
+      },
+      "verified": true,
+      "elapsed_ms": 65.57579999999962
+    }
+  ],
+  "campaign_win_fixtures": [
+    {
+      "type": "end",
+      "ticks": 1,
+      "state": "won",
+      "score": 1046
+    },
+    {
+      "type": "end",
+      "ticks": 1,
+      "state": "won",
+      "score": 1195
+    },
+    {
+      "type": "end",
+      "ticks": 1,
+      "state": "won",
+      "score": 1344
+    }
+  ],
+  "benchmark": {
+    "night": 3,
+    "ticks": 18000,
+    "elapsed_ms": [
+      578.0439999999999,
+      593.6392000000005
+    ],
+    "limit_ms": 30000,
+    "scenario": "tests/scenarios/phase-3/benchmark.json",
+    "note": "Invulnerability keeps gameplay running to dawn; wind disabled so stationary player cannot fall."
+  },
+  "determinism": {
+    "identical": true,
+    "sha256": "5b54a1f8b0fb0cbe403a4715c2095893f2d90ae12d0d38bd70ab7cce46880bbe"
+  },
+  "source_hash_format": "UTF-8 text with LF line endings",
+  "source_sha256": {
+    "game.contract.json": "6632f83f499d6a67ed514ad78e259c6b91e04f65560f0977466e9f4762d7c4d3",
+    "package.json": "9f25e4a61b419ecf65842d14cf2a5f21683af369e68f655da005e0f02d1eb071",
+    "index.html": "a7bf777c0d62ee40a7a8523a166ba40ae061abcbabff6c8f94783de53a31a44a",
+    "benchmark.html": "3acea3c3f829bbd7ae7dc785ae70a9784995321d676686ca11e8fcd05d96b419",
+    "src/style.css": "2e17cd668896e8c25a3f12ad6528e41646f1f563a963122af4881fd7cf16f24f",
+    "src/audio.mjs": "451fd10c9871a44feaabe082e795e8c7c9640445daf9ea27f1ef9c52e15f021a",
+    "src/bench-browser.mjs": "65344def9fec365e32178bc021006c3110d0ac28ddfbbac872a9791912ee93f7",
+    "src/benchmark.mjs": "cdabe3198ed3273874647351ccdcaccdd2f01f129d34fd00abddb0fc3b6a98bd",
+    "src/bindings.mjs": "77429ef2d8347da9d290e1655a66c16adeb23822135d6c6378cd1fbbe328b092",
+    "src/browser.mjs": "fca5ff660f55507892622094779a75cc5da75cc4a6f3d73fcc8277e8bc4631c3",
+    "src/campaign.mjs": "5ae4e2babde7cbff0bc53ade28505d1240a54cd88e5f0148608c5c395f55b46b",
+    "src/game.mjs": "2d1b2ae5bc5fa099cc733352b0fa743b0717012650743a403658ebda83eb49b9",
+    "src/leaderboard.mjs": "605d4c93b86c8450b52451f1573b55bf1e060f143bd74f121566da5b2b21a7cf",
+    "src/levels.mjs": "58e28acceb0d30255d6831bba23c0bcd287f6d315809bd45871f0654a55f0c81",
+    "src/performance.mjs": "f7777c898d624e3010c0b976eaf776e3951b4c535da7d598dfaaab0e45263992",
+    "src/recording.mjs": "5b1a9bc1f02cf3b8d3b1fd917cc8286a3979634b8ab94423f617a3658cae64c5",
+    "src/rules.mjs": "b76e9c85c92c4bb52ffb33c489a24d0b88fabf63e0aaf9655fa841d1e964f9f1",
+    "src/settings.mjs": "0ecef108b2b7dbc76db20623f49e119708ed35ff06d6dcfff0bc0c1eaca87925",
+    "src/validation.mjs": "17c726e49fae6d2648c887296846f0fa53d780c174d78023e0a8257064ef99d8",
+    "src/view.mjs": "7dbcfbae540207c0f1bbb6c86288ac4a8c00e38a5eb963993987242bdadd1690",
+    "scripts/bench.mjs": "dfd6e06ef9903b31ff6c64ffeb2f2ae79e34d43966ab0e4d73de38d2faf8c1f1",
+    "scripts/check.mjs": "8b480131cd1f8ccc9fe7401f5a2b108cc66ea65f4510aa2bc82e10e0151584de",
+    "scripts/demo.mjs": "5aa2aeafccb23517fc89815d1c445597f22563e1f0756a0ec58634598157ace6",
+    "scripts/headless.mjs": "fc50c51c41abcc880d6e46a8b4758adccf80b889020e7caf25b27ccdd4808ba6",
+    "scripts/http-smoke.mjs": "3cc45df3a6b1a4e489a6c6df8fc8ca2388217f2581f4dcb75a80f1e867bb3119",
+    "scripts/leaderboard-store.mjs": "46ba3f0e96b6f84a820401a7879b62b036fa486b82476390824b65be850d8fe2",
+    "scripts/package.mjs": "1333a09a60d5c20a9724bb5f215cf5dd9e6882eaaa4c3bc114f3299befcf9a08",
+    "scripts/publish-release.mjs": "6b3daa2483aa2d2f9edfbb6f83be428fd65036b723076d1a22967d8b44e9724a",
+    "scripts/serve.mjs": "acf58827310499c8e647329a84664a287358fed62a0f3a256a7000084a2e50f3",
+    "scripts/server.mjs": "2aaf46a3926f3e1aa723de093fe6fe7a46fa0cbf55b359387ebd4f91a8f4ab10",
+    "scripts/soak.mjs": "6a2d9bb3805402a1dfaf893eac906c6480341c39e2b3b00baa89ac25d776d22a",
+    "scripts/verify.mjs": "ace414504c99ef0cbe82eca73782e8d5bb5bb64592ecf5c048b1478743fe0390",
+    "scripts/video-check.mjs": "63cc7832f1ca9a9a9315b0a2cb1167a3d99aedb251522010310cde8e005521d6",
+    "scripts/zip.mjs": "e2144e8be268ab148b1a3333c82b1cd6527654de025ffde6cd8547b42d8c69e1"
+  },
+  "visual_qa": {
+    "benchmark_render_verified": true,
+    "manual_gameplay_video": true,
+    "full_ui_checklist": false,
+    "audio_verified": false,
+    "reason": "Real benchmark and manual gameplay canvas captured. Not all menus/settings/audio were independently reviewed."
+  }
+}

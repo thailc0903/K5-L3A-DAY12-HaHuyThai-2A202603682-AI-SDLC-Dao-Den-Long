@@ -78,8 +78,9 @@ export class GameView {
   drifterView(d){const g=new THREE.Group();this.world.add(g);for(let i=0;i<3;i++){const ribbon=this.add(new THREE.PlaneGeometry(1.8,0.16,8,1),this.mat.drifter,g,[0,i*0.18,0]);ribbon.rotation.y=i*0.3;}this.maps.drifters.set(d.id,g);return g;}
   onEvent(event,game){if(event.name==='pulse'){this.pulseAge=0;this.pulse.position.set(game.player.pos[0],game.player.pos[1]+0.8,game.player.pos[2]);}
     if(event.name==='lantern_lit'){const l=game.lanterns.find((l)=>l.id===event.data.lantern_id);this.burstOrigin=[l.pos[0],l.pos[1]+2,l.pos[2]];this.burstAge=0;}}
-  render(game,yaw,now,elapsed,creative,colorblind=false){
+  render(game,yaw,now,elapsed,creative,colorblind=false,options={}){
     this.mat.edge.color.set(colorblind?'#00B3FF':P.shadeEdge);this.mat.eyes.color.copy(this.mat.edge.color);
+    if(options.reduceMotion){creative=false;now=0;}
     const p=game.player,lit=game.lanterns.filter((l)=>l.lit).length;this.ambient.intensity=0.15+0.55*lit/game.lanterns.length;
     this.player.position.set(...p.pos);this.player.rotation.y=Math.atan2(game.facing[0],game.facing[1]);this.player.visible=p.respawnTicks===0&&!(p.invulnTicks>0&&Math.floor(game.simTick/5)%2===0);
     const moving=Math.hypot(p.vel[0],p.vel[2])>0.2;this.feet.forEach((f,i)=>f.rotation.x=moving?Math.sin(game.simTick*0.28+i*Math.PI)*0.5:0);
@@ -94,17 +95,21 @@ export class GameView {
     const active=new Set(game.drifters.map((d)=>d.id));for(const [id,g]of this.maps.drifters)g.visible=active.has(id);
     for(const d of game.drifters){const g=this.maps.drifters.get(d.id)??this.drifterView(d);g.position.set(d.pos[0],d.pos[1]+Math.sin(now/180)*0.15,d.pos[2]);g.rotation.y=Math.atan2(p.pos[0]-d.pos[0],p.pos[2]-d.pos[2]);for(let i=0;i<g.children.length;i++)g.children[i].rotation.z=Math.sin(now/160+i)*0.3;}
     for(const c of game.charms){const g=this.maps.charms.get(c.id);g.visible=c.available;g.position.set(c.pos[0],c.pos[1]+0.8+Math.sin(now/400)*0.15,c.pos[2]);g.rotation.y=now/900;}
-    this.pulseAge+=elapsed;this.pulse.visible=this.pulseAge<0.5;this.pulse.scale.setScalar(Math.max(0.01,game.tuning.pulse_radius*this.pulseAge/0.5));this.pulse.material.opacity=Math.max(0,0.45*(1-this.pulseAge/0.5));
+    this.pulseAge+=elapsed;this.pulse.visible=!options.reduceMotion&&this.pulseAge<0.5;this.pulse.scale.setScalar(Math.max(0.01,game.tuning.pulse_radius*this.pulseAge/0.5));this.pulse.material.opacity=Math.max(0,0.45*(1-this.pulseAge/0.5));
     this.creative.visible=creative;this.constellation.forEach((c,i)=>{c.star.visible=i<lit;c.line.visible=i<lit-1;});this.burstAge+=elapsed;this.burst.visible=this.burstAge<1.5;
     if(this.burst.visible){for(let i=0;i<48;i++){const a=i*2.399963,r=this.burstAge*(1+i%5*0.2);this.burstPositions[i*3]=this.burstOrigin[0]+Math.cos(a)*r;this.burstPositions[i*3+1]=this.burstOrigin[1]+this.burstAge*2-this.burstAge*this.burstAge+i%3*0.1;this.burstPositions[i*3+2]=this.burstOrigin[2]+Math.sin(a)*r;}this.burst.geometry.attributes.position.needsUpdate=true;this.burst.material.opacity=1-this.burstAge/1.5;}
     const wind=game.wind.active||game.wind.warning,w=game.wind.dir_deg*Math.PI/180;this.leaves.forEach((leaf,i)=>{leaf.visible=wind;if(wind){const along=((now/1000*(game.wind.active?9:3)+i*1.7)%22)-11,side=Math.sin(i*2.4)*7;leaf.position.set(p.pos[0]+Math.cos(w)*along-Math.sin(w)*side,p.pos[1]+1+(i%5)*0.6,p.pos[2]+Math.sin(w)*along+Math.cos(w)*side);leaf.rotation.set(i,now/500+i,i);}});
     const a=yaw*Math.PI/180;this.cameraGoal.set(p.pos[0]+Math.sin(a)*12,p.pos[1]+7,p.pos[2]+Math.cos(a)*12);this.camera.position.lerp(this.cameraGoal,1-Math.exp(-Math.min(elapsed,0.1)*12));this.look.set(p.pos[0]-Math.sin(a)*3,p.pos[1]+1.4,p.pos[2]-Math.cos(a)*3);this.camera.lookAt(this.look);
+    if(options.orbit){this.camera.position.set(...options.orbit);this.camera.lookAt(0,0,0);}
     this.renderer.render(this.scene,this.camera);
   }
   beacon(game){const l=game.lanterns.filter((l)=>!l.lit||!game.protected(l)).sort((a,b)=>distance(a.pos,game.player.pos)-distance(b.pos,game.player.pos))[0];if(!l)return null;
-    this.screenPoint.set(l.pos[0],l.pos[1]+2,l.pos[2]);this.offset.copy(this.screenPoint).sub(this.camera.position);this.camera.getWorldDirection(this.cameraForward);const behind=this.offset.dot(this.cameraForward)<0;this.screenPoint.project(this.camera);
-    if(!behind&&Math.abs(this.screenPoint.x)<0.92&&Math.abs(this.screenPoint.y)<0.86&&this.screenPoint.z<1)return null;
-    let x=this.screenPoint.x,y=-this.screenPoint.y;if(behind){x=-x;y=-y;}if(Math.hypot(x,y)<0.01)y=1;const scale=Math.max(Math.abs(x),Math.abs(y),0.001);return{id:l.id,metres:Math.round(distance(l.pos,game.player.pos)),x:x/scale,y:y/scale,angle:Math.atan2(y,x)*180/Math.PI+90};
+    return this.projectBeacon(l.pos,l.id,game.player.pos);
+  }
+  projectBeacon(pos,id,playerPos,force=false){
+    this.screenPoint.set(pos[0],pos[1]+2,pos[2]);this.offset.copy(this.screenPoint).sub(this.camera.position);this.camera.getWorldDirection(this.cameraForward);const behind=this.offset.dot(this.cameraForward)<0;this.screenPoint.project(this.camera);
+    if(!force&&!behind&&Math.abs(this.screenPoint.x)<0.92&&Math.abs(this.screenPoint.y)<0.86&&this.screenPoint.z<1)return null;
+    let x=this.screenPoint.x,y=-this.screenPoint.y;if(behind){x=-x;y=-y;}if(Math.hypot(x,y)<0.01)y=1;const scale=Math.max(Math.abs(x),Math.abs(y),0.001);return{id,metres:Math.round(distance(pos,playerPos)),x:x/scale,y:y/scale,angle:Math.atan2(y,x)*180/Math.PI+90};
   }
   setBenchmark(enabled){this.benchmark=enabled;this.resize();}
   resize(){const width=this.benchmark?1280:(globalThis.innerWidth??1280),height=this.benchmark?720:(globalThis.innerHeight??720);this.renderer.setPixelRatio(this.benchmark?1:Math.min(globalThis.devicePixelRatio??1,1.5));this.renderer.setSize(width,height,false);this.camera.aspect=width/height;this.camera.updateProjectionMatrix();}

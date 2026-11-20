@@ -1,0 +1,21 @@
+{
+    "cpu":  "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+    "gpu":  [
+                {
+                    "Name":  "NVIDIA GeForce RTX 3050 Laptop GPU",
+                    "DriverVersion":  "32.0.16.1062"
+                },
+                {
+                    "Name":  "Intel(R) UHD Graphics",
+                    "DriverVersion":  "30.0.100.9864"
+                }
+            ],
+    "ram_bytes":  16948453376,
+    "os":  {
+               "Caption":  "Microsoft Windows 11 Home Single Language",
+               "Version":  "10.0.26300",
+               "BuildNumber":  "26300"
+           },
+    "power_scheme":  "Power Scheme GUID: 0bb45577-ddad-4f76-9183-c467f4ad72ca  (Acer)",
+    "note":  "Local reference machine; GPU list does not identify which adapter Chromium selected."
+}

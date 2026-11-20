@@ -1,4 +1,4 @@
 #!/bin/sh
 set -eu
 node scripts/check.mjs
-node --test tests/game.test.mjs tests/presentation.test.mjs tests/scene.test.mjs
+node --test tests/game.test.mjs tests/presentation.test.mjs tests/scene.test.mjs tests/release.test.mjs

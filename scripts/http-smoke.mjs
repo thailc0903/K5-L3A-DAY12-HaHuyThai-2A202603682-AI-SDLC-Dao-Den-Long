@@ -12,7 +12,8 @@ try {
   });
   const checks=[];
   const resources=[['/','text/html'],['/src/style.css','text/css'],['/vendor/three.module.js','text/javascript'],['/game.contract.json','application/json']];
-  for(const file of ['browser','game','validation','levels','rules','campaign','settings','audio','performance','view'])resources.push([`/src/${file}.mjs`,'text/javascript']);
+  resources.push(['/benchmark.html','text/html']);
+  for(const file of ['browser','game','validation','levels','rules','campaign','settings','audio','performance','view','benchmark','bench-browser','bindings','leaderboard','recording'])resources.push([`/src/${file}.mjs`,'text/javascript']);
   for(const [path,type] of resources) {
     const r=await fetch(base+path); assert.equal(r.status,200,path); assert.ok(r.headers.get('content-type').startsWith(type),path);
     const text=await r.text(); assert.ok(text.length>0,path); checks.push({path,status:r.status,bytes:Buffer.byteLength(text)});

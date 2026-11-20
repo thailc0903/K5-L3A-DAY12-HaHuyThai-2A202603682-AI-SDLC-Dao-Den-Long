@@ -5,6 +5,7 @@ import {Campaign} from '../src/campaign.mjs';
 import {normalizeSettings,saveSettings,loadSettings} from '../src/settings.mjs';
 import {FrameMeter} from '../src/performance.mjs';
 import {Game} from '../src/game.mjs';
+import {DEFAULT_BINDINGS} from '../src/bindings.mjs';
 import {PALETTE} from '../src/rules.mjs';
 const t=JSON.parse(readFileSync(new URL('../game.contract.json',import.meta.url),'utf8')).tuning;
 test('campaign follows all three nights and only counts won nights',()=>{
@@ -22,8 +23,8 @@ test('retrying a lost night preserves earlier wins and resets current credit',()
 });
 test('volume/sensitivity/creative preferences survive storage reload, clamp invalid values',()=>{
   const data=new Map(),storage={getItem:(k)=>data.get(k)??null,setItem:(k,v)=>data.set(k,v)};
-  saveSettings(storage,{volume:0.7,sensitivity:0.62,creative:false,colorblind:true});assert.deepEqual(loadSettings(storage),{volume:0.7,sensitivity:0.62,creative:false,colorblind:true});
-  assert.deepEqual(normalizeSettings({volume:4,sensitivity:-3}),{volume:1,sensitivity:0.1,creative:true,colorblind:false});assert.equal(normalizeSettings(null).volume,0.35);
+  saveSettings(storage,{volume:0.7,sensitivity:0.62,creative:false,colorblind:true,reduceMotion:false,largeText:false,bindings:{...DEFAULT_BINDINGS}});assert.deepEqual(loadSettings(storage),{volume:0.7,sensitivity:0.62,creative:false,colorblind:true,reduceMotion:false,largeText:false,bindings:{...DEFAULT_BINDINGS}});
+  assert.deepEqual(normalizeSettings({volume:4,sensitivity:-3}),{volume:1,sensitivity:0.1,creative:true,colorblind:false,reduceMotion:false,largeText:false,bindings:{...DEFAULT_BINDINGS}});assert.equal(normalizeSettings(null).volume,0.35);
   assert.doesNotThrow(()=>loadSettings({getItem:()=>{throw new Error('disabled');}}));assert.doesNotThrow(()=>saveSettings(undefined,{}));
 });
 test('FPS meter excludes warmup/paused intervals and only passes complete 720p measurements',()=>{

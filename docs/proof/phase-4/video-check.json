@@ -1,0 +1,8 @@
+{
+  "container": "MP4",
+  "duration_s": 39.06336666666667,
+  "bytes": 9603713,
+  "sha256": "b3e1614300934ec5e42b1afb9c6a15407bfdf275bca081f61d98f9fd10a9997f",
+  "under_five_minutes": true,
+  "scope": "Container/sample timestamp validation; see game-scene.png for the captured frame and demo-metadata.json for recorder details."
+}

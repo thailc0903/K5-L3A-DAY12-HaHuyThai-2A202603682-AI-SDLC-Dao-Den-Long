@@ -1,5 +1,14 @@
 # Changelog
 
+## Phase 4 / v1.0.0 — Contract 1.3
+
+- Added the standard GPU benchmark CLI: 1280×720, 200 wander shades, 100 motes, three lit lamps, orbit camera, 3s warmup, frame percentiles and process-start load timing. Saved real measurement, screenshot and source hashes; web RSS is null and vsync cannot be disabled through the WebGL API.
+- Added the seeded ten-night headless soak in one process, RSS after initial load/final reset, crash reporting and the 20% gate. The declared soak command uses V8 interpreter mode, a 1MB young generation and explicit GC at sample boundaries; no padded memory baseline.
+- Added disk-backed top-ten leaderboard, input validation, stable score/time ranking, menu/results name entry and CLI JSON export.
+- Added nine remappable actions with conflict warnings/reset/persistence, visual spawn arrows/countdown/wind/low-fuel cues, reduced motion and 18px UI with 1.25× large text.
+- Added a canvas-only manual MP4 recorder, true captured images/video, portable ZIP packaging, release tooling and four-phase retrospective. Preserved the original lab README at the student's explicit request; product instructions remain in docs/game/README.md.
+- Gameplay tuning/core and all 24 retained Phase 3 headless JSONL outputs remain unchanged. Old proof/tags are preserved. Real benchmark results describe the local machine, not the instructor's measurement machine.
+
 ## Phase 3 — Contract 1.2 — Breaking changes
 
 - Replaced permanent lights with fuel (100 max, natural decay, refuel, extinction and five-mote relighting); snapshots add fuel/ever_lit/relit_count and player.capacity.
