@@ -9,6 +9,7 @@
 - Rà soát view phát hiện cần tắt frustum culling của instanced motes/burst đổi vị trí, và dispose geometry/material riêng khi rebuild; sửa để tránh mất hình và tích lũy tài nguyên qua retry/chuyển Đêm.
 - Có CPU scene tests dùng geometry/math Three.js thật nhưng backend không vẽ, bắt lỗi API/runtime dựng ba map. Không gọi các test này là ảnh/chơi thử/FPS thật.
 - Đã chạy verify: test logic/presentation/scene,9 fixture headless, thắng từng Đêm, hai lượt đầy đủ21600 bước so byte. Các số đo thật lấy từ summary.json, không nhập tay.
+- Clone sạch mã cuối commit6b52038, chạy lại gate53/53 và so hash nguồn (LF)/output JSONL với checkout đang làm: khớp. Rà soát cuối sửa ưu tiên bục khi bấm Space đồng thời; test đã kiểm tra trường hợp này.
 - Kiểm tra công cụ CUA hiện tại vẫn không có browser host. Không dùng đường điều khiển trình duyệt khác để vượt hạn chế. Chưa nghe âm thanh/chụp màn hình/chơi UI hoặc đo GPU FPS thật; cung cấp nút đo720p để người học lưu kết quả.
 - Số token/chi phí không có dashboard đo trong công cụ. Ước tính thô khoảng40.000–100.000 token cho chuỗi Phase2 gồm ngữ cảnh/mã/output; chưa đối chiếu thanh toán, không phải số đo. Chi phí tiền chưa xác định. Giảm ngữ cảnh bằng core dùng chung, test CLI, không tạo ảnh/asset hoặc feature ngoài ticket.
 

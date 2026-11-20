@@ -20,6 +20,7 @@ Sinh lại từ gốc repo bằng `node scripts/verify.mjs`. File TAP/JSON/JSONL
 | Cài đặt/flow/FPS meter | tests.tap (presentation) | Đã chạy logic; chưa thao tác browser thật |
 | Dựng/cập nhật scene3D | tests.tap (CPU scene) | Chạy Three.js geometry/math thật, backend không vẽ |
 | Server/phụ thuộc offline | http.json; build.txt | Đã chạy HTTP/syntax |
+| Clone sạch của mã cuối | clean-clone-summary.json, clone commit6b52038 | 53/53 test,9 fixture, benchmark và hash nguồn/output khớp |
 | WebGL, màu pixel, HUD, camera, sound | Checklist dưới đây | Chưa xác nhận trực quan/nghe |
 | ≥30 FPS tại1280×720 | Nút Đo FPS720p → Lưu kết quả FPS | Chưa có file GPU đo thật |
 
@@ -32,6 +33,8 @@ node scripts/headless.mjs --seed 12 --night 2 --ticks 121 --scenario tests/scena
 ```
 
 Benchmark dùng scenario invuln dài để không thua sớm, tắt gió để người đứng yên không rơi; vẫn sinh đom đóm, Bóng Mực và Gió Lạc theo lịch. Snapshot mặc định mỗi10tick. Không dùng scenario này trong game thường.
+
+clean-clone-summary.json được sao chép nguyên từ output verify trong clone local sạch của commit6b52038, sau sửa ưu tiên bục nhảy. Các commit bàn giao sau đó chỉ bổ sung bằng chứng/tài liệu; không thay gameplay. Kết quả clone này là trên Windows, chưa tự gán thành kết quả Linux/GPU.
 
 ## Checklist người học kiểm tra trong browser
 
