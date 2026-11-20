@@ -1,6 +1,6 @@
 # Day 12 — AI SDLC: Đảo Đèn Lồng
 
-[Hướng dẫn chơi và chạy game](docs/game/README.md) · [Video demo](docs/demo/demo.mp4) · [Tag `demo`](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/tree/demo) · [Tải bản v1.0.0](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0)
+[Video demo](docs/demo/demo.mp4) · [Hướng dẫn chơi và chạy game](docs/game/README.md)
 
 > **Cá nhân** (1 người / 1 MSSV) · Áp dụng SDLC cùng AI để xây một **game 3D** qua **4 phase**, từ yêu cầu ban đầu tới bản phát hành.
 > **Lab board + trợ giảng:** **[Đảo Đèn Lồng Lab](https://claude.ai/artifact/Q1RYyv1dxjUczzCbd2ZnoW)**
@@ -30,10 +30,10 @@ Yêu cầu dự án được phát hành tại **[Đảo Đèn Lồng Lab](https
 
 | Phase | Bạn nhận | Nộp |
 |---|---|---|
-| [1](docs/notes/phase-1-spec.md) | [**PRD-0** — tài liệu Phase 1](docs/notes/phase-1-spec.md) (mô tả tổng quát) + Test Contract · [Bằng chứng](docs/proof/phase-1/README.md) | tag [`phase-1`](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/tree/phase-1) |
-| [2](docs/notes/phase-2-spec.md) | [**Ticket-02** — tài liệu Phase 2](docs/notes/phase-2-spec.md), phát hành khi Phase 1 kết thúc · [Bằng chứng](docs/proof/phase-2/README.md) | tag [`phase-2`](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/tree/phase-2) |
-| [3](docs/notes/phase-3-adr.md) | [**Ticket-03** — quyết định thiết kế Phase 3](docs/notes/phase-3-adr.md), phát hành khi Phase 2 kết thúc · [Bằng chứng](docs/proof/phase-3/README.md) | tag [`phase-3`](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/tree/phase-3) |
-| [4](docs/notes/phase-4-release.md) | [**Ticket-04** — tài liệu phát hành Phase 4](docs/notes/phase-4-release.md), phát hành khi Phase 3 kết thúc · [Bằng chứng](docs/proof/phase-4/README.md) | tag [`phase-4`](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/tree/phase-4) + Release [`v1.0.0`](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0) |
+| 1 | **PRD-0** (mô tả tổng quát) + Test Contract | tag `phase-1` |
+| 2 | **Ticket-02**, phát hành khi Phase 1 kết thúc | tag `phase-2` |
+| 3 | **Ticket-03**, phát hành khi Phase 2 kết thúc | tag `phase-3` |
+| 4 | **Ticket-04**, phát hành khi Phase 3 kết thúc | tag `phase-4` + Release `v1.0.0` |
 
 Yêu cầu sẽ được bổ sung và có thể thay đổi giữa các phase, giống dự án thật.
 
