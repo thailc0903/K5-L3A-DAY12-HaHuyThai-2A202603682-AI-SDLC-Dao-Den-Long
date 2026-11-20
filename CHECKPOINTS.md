@@ -43,10 +43,10 @@ Mỗi checkpoint phase (CP1 đến CP4) có cùng một khung, nhưng nội dung
 **Mục tiêu:** có môi trường làm việc và repo sẵn sàng. Nên chuẩn bị **trước** buổi lab nếu có thể. Nếu không, làm ngay đầu giờ Phase 1.
 
 Việc cần làm:
-- [ ] Tạo **repo cá nhân, public** trên GitHub, đặt tên theo [SUBMISSION.md](SUBMISSION.md).
-- [ ] Chọn công cụ AI, engine và ngôn ngữ. Cài và chạy thử một chương trình "hello" 3D hoặc headless để chắc môi trường ổn.
+- [x] Tạo **repo cá nhân, public** trên GitHub, đặt tên theo [SUBMISSION.md](SUBMISSION.md).
+- [x] Chọn công cụ AI, engine và ngôn ngữ. Cài và chạy thử một chương trình "hello" 3D hoặc headless để chắc môi trường ổn.
 - [ ] Đăng nhập claude.ai, mở lab board, thử mở tab Phase 1 và hỏi trợ giảng một câu bất kỳ để chắc trợ giảng hoạt động.
-- [ ] Tạo sẵn nơi ghi chép (một file hoặc một thư mục tùy bạn) cho giả định, nhật ký dùng AI và bằng chứng.
+- [x] Tạo sẵn nơi ghi chép (một file hoặc một thư mục tùy bạn) cho giả định, nhật ký dùng AI và bằng chứng.
 - [ ] Kiểm tra hạn nộp từng phase theo thông báo của Coach.
 
 Tự kiểm: clone repo sang thư mục khác và chạy được chương trình thử.
@@ -59,16 +59,16 @@ Tự kiểm: clone repo sang thư mục khác và chạy được chương trìn
 
 Gợi ý:
 - [ ] Đọc PRD-0 hai lần. Lần một đọc để hiểu game. Lần hai gạch chân những chỗ mơ hồ và những chỗ **bắt buộc chính xác** (Test Contract).
-- [ ] Viết giả định cho từng chỗ mơ hồ, và các con số bạn tự chọn. Những con số này sẽ cần khai báo theo yêu cầu của contract.
-- [ ] Tách logic game khỏi phần hiển thị để chạy được headless.
-- [ ] Tự viết vài scenario nhỏ và kiểm tra đầu ra đúng định dạng.
-- [ ] Chạy hai lần cùng đầu vào và so sánh, nếu contract yêu cầu tính tất định.
+- [x] Viết giả định cho từng chỗ mơ hồ, và các con số bạn tự chọn. Những con số này sẽ cần khai báo theo yêu cầu của contract.
+- [x] Tách logic game khỏi phần hiển thị để chạy được headless.
+- [x] Tự viết vài scenario nhỏ và kiểm tra đầu ra đúng định dạng.
+- [x] Chạy hai lần cùng đầu vào và so sánh, nếu contract yêu cầu tính tất định.
 - [ ] Làm đúng các bàn giao liệt kê trong PRD-0.
 
 Tự kiểm:
-- [ ] Clone sạch, làm theo README của bạn, chạy được game.
-- [ ] Mỗi yêu cầu chính có bằng chứng; chỗ chưa đạt đã ghi.
-- [ ] Đã gắn tag `phase-1` và push.
+- [x] Clone sạch, làm theo README của bạn, chạy được game.
+- [x] Mỗi yêu cầu chính có bằng chứng; chỗ chưa đạt đã ghi.
+- [x] Đã gắn tag `phase-1` và push.
 
 ---
 
@@ -77,14 +77,14 @@ Tự kiểm:
 **Mục tiêu:** tiếp nhận yêu cầu mới, mở rộng sản phẩm mà không làm hỏng những gì đã đúng.
 
 Gợi ý:
-- [ ] Đọc ticket, so với những giả định ở Phase 1. Chỗ nào ticket đã làm rõ hoặc đổi, cập nhật giả định.
+- [x] Đọc ticket, so với những giả định ở Phase 1. Chỗ nào ticket đã làm rõ hoặc đổi, cập nhật giả định.
 - [ ] Viết kế hoạch kiểm chứng cho phần mới **trước** khi code.
-- [ ] Chạy lại toàn bộ kiểm chứng của Phase 1 sau khi tích hợp.
-- [ ] Rà soát harness: agent có sai lặp lại không? Đã đến lúc thêm một dòng vào hướng dẫn, một skill hay một hook chưa?
+- [x] Chạy lại toàn bộ kiểm chứng của Phase 1 sau khi tích hợp.
+- [x] Rà soát harness: agent có sai lặp lại không? Đã đến lúc thêm một dòng vào hướng dẫn, một skill hay một hook chưa?
 
 Tự kiểm:
-- [ ] Phần mới có bằng chứng; phần cũ không bị hỏng (hoặc có lý do rõ ràng nếu đổi).
-- [ ] Đã gắn tag `phase-2` và push.
+- [x] Phần mới có bằng chứng; phần cũ không bị hỏng (hoặc có lý do rõ ràng nếu đổi).
+- [x] Đã gắn tag `phase-2` và push.
 
 ---
 
@@ -93,15 +93,15 @@ Tự kiểm:
 **Mục tiêu:** xử lý một thay đổi yêu cầu có thể **thay thế** những luật đã có.
 
 Gợi ý:
-- [ ] Đọc kỹ những chỗ ticket nói luật cũ bị thay. Liệt kê những test, tài liệu và giả định cũ bị ảnh hưởng.
-- [ ] Ghi lại ngắn gọn bạn thay đổi thiết kế thế nào và vì sao (một đoạn ngắn là đủ).
-- [ ] Test cũ bị luật mới làm sai: **sửa hoặc bỏ kèm lý do**, không bỏ qua âm thầm.
-- [ ] Chạy lại tất cả kiểm chứng còn hiệu lực.
+- [x] Đọc kỹ những chỗ ticket nói luật cũ bị thay. Liệt kê những test, tài liệu và giả định cũ bị ảnh hưởng.
+- [x] Ghi lại ngắn gọn bạn thay đổi thiết kế thế nào và vì sao (một đoạn ngắn là đủ).
+- [x] Test cũ bị luật mới làm sai: **sửa hoặc bỏ kèm lý do**, không bỏ qua âm thầm.
+- [x] Chạy lại tất cả kiểm chứng còn hiệu lực.
 
 Tự kiểm:
 - [ ] Người khác đọc ghi chú của bạn hiểu được vì sao đổi hướng.
-- [ ] Không còn test bị tắt mà không có lý do.
-- [ ] Đã gắn tag `phase-3` và push.
+- [x] Không còn test bị tắt mà không có lý do.
+- [x] Đã gắn tag `phase-3` và push.
 
 ---
 
@@ -110,14 +110,14 @@ Tự kiểm:
 **Mục tiêu:** đưa sản phẩm đến mức phát hành được, đo được, cài đặt dễ.
 
 Gợi ý:
-- [ ] Đọc các yêu cầu có **số đo cụ thể** trong ticket. Với mỗi yêu cầu đo, chạy thật và lưu kết quả cùng cấu hình máy.
-- [ ] Làm sạch README: người khác clone sạch, làm theo, chạy được trong tối đa 3 lệnh.
-- [ ] Đảm bảo file bản quyền, ghi nguồn asset, giấy phép.
-- [ ] Tạo bản phát hành chạy được (file thực thi, thư mục web tĩnh hoặc Docker) và GitHub Release `v1.0.0`.
+- [x] Đọc các yêu cầu có **số đo cụ thể** trong ticket. Với mỗi yêu cầu đo, chạy thật và lưu kết quả cùng cấu hình máy.
+- [x] Làm sạch README: người khác clone sạch, làm theo, chạy được trong tối đa 3 lệnh.
+- [x] Đảm bảo file bản quyền, ghi nguồn asset, giấy phép.
+- [x] Tạo bản phát hành chạy được (file thực thi, thư mục web tĩnh hoặc Docker) và GitHub Release `v1.0.0`.
 
 Tự kiểm:
-- [ ] Thử trên một thư mục sạch hoặc máy khác, không dùng cấu hình sẵn của bạn.
-- [ ] Đã gắn tag `phase-4` và tạo Release `v1.0.0`.
+- [x] Thử trên một thư mục sạch hoặc máy khác, không dùng cấu hình sẵn của bạn.
+- [x] Đã gắn tag `phase-4` và tạo Release `v1.0.0`.
 
 ---
 
@@ -125,8 +125,8 @@ Tự kiểm:
 
 **Mục tiêu:** hoàn tất ghi chép, quay video, kiểm tra lần cuối, nộp.
 
-- [ ] **Retro ngắn:** điều gì hiệu quả hoặc không khi làm với AI; những lần AI sai và cách bạn phát hiện; harness nào giúp nhiều nhất; token/chi phí ước tính và cách bạn tiết kiệm; nếu làm lại thì đổi gì.
-- [ ] **Video demo `.mp4` dưới 5 phút**: chơi thử và cho thấy bằng chứng game chạy đúng. Đính kèm Release `v1.0.0` hoặc commit vào `docs/demo/demo.mp4` (dưới 100 MB). Đặt link ở đầu README.
-- [ ] Rà soát repo: không có `.env`, API key, token. Lịch sử git còn đủ file harness.
-- [ ] Rà soát bằng danh sách ở [SUBMISSION.md](SUBMISSION.md) mục "Checklist trước khi nộp".
+- [x] **Retro ngắn:** điều gì hiệu quả hoặc không khi làm với AI; những lần AI sai và cách bạn phát hiện; harness nào giúp nhiều nhất; token/chi phí ước tính và cách bạn tiết kiệm; nếu làm lại thì đổi gì.
+- [x] **Video demo `.mp4` dưới 5 phút**: chơi thử và cho thấy bằng chứng game chạy đúng. Đính kèm Release `v1.0.0` hoặc commit vào `docs/demo/demo.mp4` (dưới 100 MB). Đặt link ở đầu README.
+- [x] Rà soát repo: không có `.env`, API key, token. Lịch sử git còn đủ file harness.
+- [x] Rà soát bằng danh sách ở [SUBMISSION.md](SUBMISSION.md) mục "Checklist trước khi nộp".
 - [ ] Nộp link repo public theo hướng dẫn của Coach.
