@@ -17,7 +17,7 @@ function args(argv) {
     if (!/^-?\d+$/.test(result[key]) || !Number.isSafeInteger(Number(result[key]))) throw new InputError(`--${key} must be an integer`);
     result[key] = Number(result[key]);
   }
-  if (result.night !== 1 || result.ticks < 0 || (result['snapshot-every'] ?? 10) <= 0) throw new InputError('Use --night 1, --ticks >= 0, --snapshot-every > 0');
+  if (![1,2,3].includes(result.night) || result.ticks < 0 || (result['snapshot-every'] ?? 10) <= 0) throw new InputError('Use --night 1/2/3, --ticks >= 0, --snapshot-every > 0');
   return result;
 }
 async function json(path, name) {
@@ -29,9 +29,9 @@ try {
   const contract = await json(resolve(root, 'game.contract.json'), 'contract');
   const scenario = a.scenario ? await json(a.scenario, 'scenario') : {};
   const inputs = validateInputs(a.inputs ? await json(a.inputs, 'inputs') : { frames: [] });
-  const game = new Game(contract.tuning, { seed: a.seed, scenario });
-  const lines = [JSON.stringify(game.snapshot())]; let frame = 0;
-  for (let i = 0; i < a.ticks && game.state === 'playing'; i++) {
+  const game = new Game(contract.tuning, { seed: a.seed, night: a.night, scenario });
+  const lines = [JSON.stringify(game.snapshot()), ...game.initialEvents().map((e)=>JSON.stringify(e))]; let frame = 0;
+  for (let i = 0; i < a.ticks && !['won','lost'].includes(game.state); i++) {
     const patch = inputs.frames[frame]?.tick === i ? inputs.frames[frame++] : {};
     const { tick, ...input } = patch;
     for (const event of game.step(input)) lines.push(JSON.stringify(event));
