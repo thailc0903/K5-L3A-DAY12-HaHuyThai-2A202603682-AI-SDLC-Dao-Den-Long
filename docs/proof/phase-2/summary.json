@@ -20,7 +20,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 58.71849999999995
+      "elapsed_ms": 57.53279999999995
     },
     {
       "name": "pause",
@@ -32,7 +32,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 86.6878999999999
+      "elapsed_ms": 60.96180000000004
     },
     {
       "name": "drifter-steal",
@@ -44,7 +44,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 161.37390000000005
+      "elapsed_ms": 58.62220000000025
     },
     {
       "name": "drifter-drop",
@@ -56,7 +56,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 116.85159999999996
+      "elapsed_ms": 58.35370000000012
     },
     {
       "name": "charm",
@@ -68,7 +68,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 107.73189999999977
+      "elapsed_ms": 77.33750000000009
     },
     {
       "name": "fall",
@@ -80,7 +80,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 87.02269999999999
+      "elapsed_ms": 102.79750000000013
     },
     {
       "name": "pad",
@@ -92,7 +92,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 75.32930000000033
+      "elapsed_ms": 75.24589999999989
     },
     {
       "name": "tiers",
@@ -104,7 +104,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 62.207600000000184
+      "elapsed_ms": 63.35660000000007
     },
     {
       "name": "wind",
@@ -116,7 +116,7 @@
         "score": 0
       },
       "verified": true,
-      "elapsed_ms": 81.21210000000019
+      "elapsed_ms": 70.72000000000025
     }
   ],
   "campaign_win_fixtures": [
@@ -143,8 +143,8 @@
     "night": 3,
     "ticks": 21600,
     "elapsed_ms": [
-      572.5171,
-      521.7666999999997
+      539.6367999999998,
+      573.5951
     ],
     "limit_ms": 30000,
     "scenario": "tests/scenarios/phase-2/benchmark.json",
@@ -159,7 +159,7 @@
     "game.contract.json": "794f690885d9078aa6500cb845a2bae28adedbbbeccdd071438354607083232a",
     "index.html": "8feda892ac7896fbaac5ffd7b6223780cdda0bb332bc4c8d787ac56758836ff1",
     "src/style.css": "52d9b68612e8be477dc1fb185bc2b9e77b75902b4642a5767d7a7b1e36a80562",
-    "src/game.mjs": "1f86e53e13a15a9e3372b08538a15df131a55ae4ec228c6450e0e13231836461",
+    "src/game.mjs": "ffb47abd8cff4aa2ebb4d17a0008753e382d44d6a8d557cfffbdefd0e58c1dd0",
     "src/levels.mjs": "58e28acceb0d30255d6831bba23c0bcd287f6d315809bd45871f0654a55f0c81",
     "src/rules.mjs": "b76e9c85c92c4bb52ffb33c489a24d0b88fabf63e0aaf9655fa841d1e964f9f1",
     "src/validation.mjs": "056b802ff533b524c2812b1c90a3d78cbf4a12caf698443c5a442dd796fb0e76",

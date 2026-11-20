@@ -125,7 +125,7 @@ test('scenario flags disable schedules; explicit ids do not collide',()=>{
 });
 test('night 2 bridge surface is exactly four metres wide; pads launch to the other island',()=>{
   const l=createLevel(2);assert.deepEqual(surfacesAt(l,35,2),[0]);assert.deepEqual(surfacesAt(l,35,2.001),[]);
-  for(const pos of [[20,0,18],[50,0,-18]]){const g=make({player:{pos}},2);g.step({move:[0,1]});assert.ok(g.player.vel[1]>13);close(Math.hypot(g.player.vel[0],g.player.vel[2]),24);steps(g,84,{move:[0,1]});assert.equal(g.player.grounded,true);assert.ok(pos[0]===20?g.player.pos[0]>42:g.player.pos[0]<28);}
+  for(const pos of [[20,0,18],[50,0,-18]]){const g=make({player:{pos}},2);g.step({move:[0,1],jump:true});assert.ok(g.player.vel[1]>13);close(Math.hypot(g.player.vel[0],g.player.vel[2]),24);steps(g,84,{move:[0,1]});assert.equal(g.player.grounded,true);assert.ok(pos[0]===20?g.player.pos[0]>42:g.player.pos[0]<28);}
 });
 test('launch pad allows dash while retaining flight and resumes launch afterwards',()=>{
   const g=make({player:{pos:[20,0,18]}},2);g.step();const y=g.player.pos[1];g.step({dash:true});close(g.player.pos[1],y);close(Math.hypot(g.player.vel[0],g.player.vel[2]),14);steps(g,11);g.step({dash:false});close(Math.hypot(g.player.vel[0],g.player.vel[2]),24);

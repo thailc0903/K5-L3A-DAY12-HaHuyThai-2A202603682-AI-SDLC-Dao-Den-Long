@@ -73,7 +73,7 @@ export class Game{
     const move=[(mx*Math.cos(a)+mz*Math.sin(a))/scale,(-mx*Math.sin(a)+mz*Math.cos(a))/scale];
     let jump=false;
     if(pressed('jump')&&p.grounded){this.vy=R.jumpSpeed;p.grounded=false;jump=true;}
-    const pad=this.level.pads.find((j)=>p.grounded&&distance(p.pos,j.pos)<=j.radius+EPS&&Math.abs(p.pos[1]-j.pos[1])<0.2);
+    const pad=this.level.pads.find((j)=>wasGrounded&&distance(p.pos,j.pos)<=j.radius+EPS&&Math.abs(p.pos[1]-j.pos[1])<0.2);
     if(pad){const dir=pad.direction??direction(pad.pos,pad.target);this.launch=[dir[0]*pad.speed,dir[1]*pad.speed];this.vy=pad.vy;p.grounded=false;jump=true;}
     let horizontal=this.launch??move.map((v)=>v*(p.charmTicks>0?R.charmSpeed:t.player_speed));
     if(Math.hypot(...horizontal)>EPS){const n=Math.hypot(...horizontal);this.facing=horizontal.map((v)=>v/n);}

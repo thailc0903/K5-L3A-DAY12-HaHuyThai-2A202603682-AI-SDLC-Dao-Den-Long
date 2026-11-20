@@ -54,7 +54,7 @@ Nguồn: toàn bộ Ticket-02 và hai bảng số chuẩn/màu do người học
 9. Charms scenario thay danh sách; có thể dùng `{id,pos,available,respawn_ticks}`. Bỏ pos với C1/C2 mặc định sẽ lấy vị trí chuẩn. available=false mà không nêu hồi bùa dùng2700. Drifters dùng `{id,pos,state,stolen,state_ticks_left}`. Motes vẫn nhận mảng tọa độ v1.0; thêm dạng `{id,pos,kind,ttl_ticks}` (hoặc ttl_s) cho test dropped.
 10. Nhặt Bùa không chiếm ô carried và không bị chặn khi túi đầy. Snapshot `invuln` là boolean; cooldown/charm/TTL/respawn dùng giây. Có thêm player.respawn_s và shade.state_ticks_left để truy vết; các trường bắt buộc đều giữ đủ.
 11. Id có cùng tiền tố số được xét theo số (S2 trước S10); các id khác so theo chuỗi. Id tự sinh không trùng id scenario. Cùng seed/inputs/scenario cho output giống byte.
-12. Tích phân vận tốc rồi vị trí mỗi bước1/60. Khi lướt giữa không trung, giữ Y và tạm giữ vy; hết lướt tiếp tục vy đó. Sau hồi sinh có một bước đứng ở spawn, vận tốc0; từ bước sau nhận chuyển động.
+12. Tích phân vận tốc rồi vị trí mỗi bước1/60. Bục có ưu tiên hơn nhảy thường nếu chân đang chạm bục, kể cả nhấn Space. Khi lướt giữa không trung, giữ Y và tạm giữ vy; hết lướt tiếp tục vy đó. Sau hồi sinh có một bước đứng ở spawn, vận tốc0; từ bước sau nhận chuyển động.
 
 ## Sáng tạo được phép
 
