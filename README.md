@@ -1,6 +1,6 @@
 # Day 12 — AI SDLC: Đảo Đèn Lồng
 
-[Hướng dẫn chơi và chạy game](docs/game/README.md) · [Video demo](docs/demo/demo.mp4) · [Tải bản v1.0.0](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0)
+[Hướng dẫn chơi và chạy game](docs/game/README.md) · [Video demo](docs/demo/demo.mp4) · [Tag `demo`](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/tree/demo) · [Tải bản v1.0.0](https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long/releases/tag/v1.0.0)
 
 > **Cá nhân** (1 người / 1 MSSV) · Áp dụng SDLC cùng AI để xây một **game 3D** qua **4 phase**, từ yêu cầu ban đầu tới bản phát hành.
 > **Lab board + trợ giảng:** **[Đảo Đèn Lồng Lab](https://claude.ai/artifact/Q1RYyv1dxjUczzCbd2ZnoW)**
