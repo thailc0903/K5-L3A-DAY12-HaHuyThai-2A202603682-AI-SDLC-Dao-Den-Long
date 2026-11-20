@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111324">
+  <title>Đảo Đèn Lồng · Đêm 1</title>
+  <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+  <canvas id="game" aria-label="Game 3D Đảo Đèn Lồng"></canvas>
+  <header class="hud">
+    <div><span class="eyebrow">ĐÊM 1 · ĐẢO BẾN</span><h1>Đảo Đèn Lồng</h1></div>
+    <div class="stats" aria-live="polite">
+      <span>Ngọn lửa <b id="health">3 / 3</b></span>
+      <span>Đom đóm <b id="carry">0 / 5</b></span>
+      <span>Đèn sáng <b id="lit">0 / 5</b></span>
+      <span>Còn lại <b id="timer">5:00</b></span>
+      <span>Điểm <b id="score">0</b></span>
+    </div>
+  </header>
+  <div class="bottom">
+    <div id="hint" role="status">Nhặt đom đóm vàng rồi mang về thắp đèn.</div>
+    <div id="pulse-status">Tỏa sáng: cần 1 đom đóm</div>
+    <p><kbd>W A S D</kbd> đi · <kbd>Space</kbd> nhảy · <kbd>E</kbd> nạp đèn · <kbd>Q</kbd> tỏa sáng · Kéo chuột để xoay camera</p>
+  </div>
+  <section id="overlay" class="overlay">
+    <div class="card">
+      <span class="eyebrow">ĐẢO ĐÈN LỒNG</span>
+      <h2 id="overlay-title">Thắp lại một đêm ấm áp</h2>
+      <p id="overlay-message">Giúp Mây gom đom đóm, thắp sáng cả 5 chiếc đèn trước bình minh. Tránh Bóng Mực tím đen và giữ lại ánh sáng để tự vệ.</p>
+      <p id="overlay-detail">Mỗi đèn cần 3 đom đóm · Tỏa sáng tốn 1 · Đèn đã sáng bảo vệ bạn.</p>
+      <button id="play" type="button">Bắt đầu Đêm 1</button>
+    </div>
+  </section>
+  <p id="error" role="alert" hidden></p>
+  <script type="module" src="/src/browser.mjs"></script>
+</body>
+</html>
