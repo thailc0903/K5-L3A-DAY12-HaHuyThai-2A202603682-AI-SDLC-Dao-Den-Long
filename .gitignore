@@ -1,0 +1,8 @@
+node_modules/
+.env
+.env.*
+!.env.example
+.local/
+*.log
+test-output/
+docs/proof/phase-1/.pending/
