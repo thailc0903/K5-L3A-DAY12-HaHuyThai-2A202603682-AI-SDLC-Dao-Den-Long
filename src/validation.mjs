@@ -20,9 +20,10 @@ export function validateScenario(s={},t,night=1){
   object(s,'scenario');keys(s,['player','random_motes','random_shades','random_drifters','wind_enabled','motes','shades','lanterns','drifters','charms','time_left_s'],'scenario');
   for(const k of ['random_motes','random_shades','random_drifters','wind_enabled'])if(k in s)bool(s[k],k);
   if('time_left_s'in s)number(s.time_left_s,'time_left_s',0);
-  if('player'in s){const p=s.player;object(p,'player');keys(p,['pos','carried','flames','invuln_ticks','dash_cd_ticks','pulse_cd_ticks','charm_ticks','vel','grounded'],'player');
+  if('player'in s){const p=s.player;object(p,'player');keys(p,['pos','carried','flames','invuln_ticks','dash_cd_ticks','pulse_cd_ticks','charm_ticks','vel','grounded','successful_lights'],'player');
     if('pos'in p)pos(p.pos,'player.pos');if('vel'in p)pos(p.vel,'player.vel');if('grounded'in p)bool(p.grounded,'player.grounded');
-    if('carried'in p)number(p.carried,'player.carried',0,t.carry_capacity,true);if('flames'in p)ticks(p.flames,'player.flames');
+    if('successful_lights'in p)ticks(p.successful_lights,'player.successful_lights');
+    if('carried'in p)number(p.carried,'player.carried',0,Math.min(t.capacity_max,t.carry_capacity+2*(p.successful_lights??0)),true);if('flames'in p)ticks(p.flames,'player.flames');
     for(const k of ['invuln_ticks','dash_cd_ticks','pulse_cd_ticks','charm_ticks'])if(k in p)ticks(p[k],`player.${k}`);
   }
   if('motes'in s)list(s.motes,'motes',(m,n)=>{
@@ -30,13 +31,15 @@ export function validateScenario(s={},t,night=1){
     if('kind'in m&&!['random','dropped'].includes(m.kind))fail(`${n}.kind must be random/dropped`);
     if('ttl_s'in m&&m.ttl_s!==null)number(m.ttl_s,`${n}.ttl_s`,0);if('ttl_ticks'in m)ticks(m.ttl_ticks,`${n}.ttl_ticks`);
   });
-  if('lanterns'in s)list(s.lanterns,'lanterns',(l,n)=>{object(l,n);keys(l,['id','pos','deposited','lit'],n);
+  if('lanterns'in s)list(s.lanterns,'lanterns',(l,n)=>{object(l,n);keys(l,['id','pos','deposited','lit','fuel','ever_lit'],n);
     if(!new RegExp(`^L[1-${night+4}]$`).test(l.id))fail(`${n}.id is not a lantern of night ${night}`);
     if('pos'in l)pos(l.pos,`${n}.pos`);if('deposited'in l)number(l.deposited,`${n}.deposited`,0,t.lantern_cost,true);if('lit'in l)bool(l.lit,`${n}.lit`);
-    if(l.lit===false&&l.deposited===t.lantern_cost)fail(`${n}: full lantern cannot be unlit`);
+    if('fuel'in l)number(l.fuel,`${n}.fuel`,0,t.fuel_max);if('ever_lit'in l)bool(l.ever_lit,`${n}.ever_lit`);
+    if(l.lit===false&&l.deposited>=(l.ever_lit?t.relight_cost:t.lantern_cost))fail(`${n}: full lantern cannot be unlit`);
   });
-  if('shades'in s)list(s.shades,'shades',(e,n)=>{object(e,n);keys(e,['id','pos','state','state_ticks_left'],n);pos(e.pos,`${n}.pos`);
-    if('state'in e&&!['spawning','wander','chase','recoil','stunned'].includes(e.state))fail(`${n}.state is invalid`);if('state_ticks_left'in e)ticks(e.state_ticks_left,`${n}.state_ticks_left`);
+  if('shades'in s)list(s.shades,'shades',(e,n)=>{object(e,n);keys(e,['id','pos','state','state_ticks_left','target_lantern_id'],n);pos(e.pos,`${n}.pos`);
+    if('state'in e&&!['spawning','wander','chase','recoil','stunned','drain'].includes(e.state))fail(`${n}.state is invalid`);if('state_ticks_left'in e)ticks(e.state_ticks_left,`${n}.state_ticks_left`);
+    if('target_lantern_id'in e&&e.target_lantern_id!==null&&!new RegExp(`^L[1-${night+4}]$`).test(e.target_lantern_id))fail(`${n}.target_lantern_id is invalid`);
   });
   if('drifters'in s)list(s.drifters,'drifters',(e,n)=>{object(e,n);keys(e,['id','pos','state','stolen','state_ticks_left'],n);pos(e.pos,`${n}.pos`);
     if('state'in e&&!['idle','chase','flee','removed'].includes(e.state))fail(`${n}.state is invalid`);if('stolen'in e)number(e.stolen,`${n}.stolen`,0,3,true);if('state_ticks_left'in e)ticks(e.state_ticks_left,`${n}.state_ticks_left`);

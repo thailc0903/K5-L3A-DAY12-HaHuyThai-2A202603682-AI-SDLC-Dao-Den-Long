@@ -11,8 +11,8 @@ test('campaign follows all three nights and only counts won nights',()=>{
   const c=new Campaign();assert.equal(c.screen,'menu');assert.equal(c.next(),false);c.intro();assert.equal(c.screen,'intro');c.start();assert.equal(c.screen,'playing');
   for(const night of [1,2,3]){
     const lamps=Array.from({length:night+4},(_,i)=>({id:`L${i+1}`,lit:i<night+3,...(i===night+3?{pos:[0,0,-30]}:{})}));
-    const g=new Game(t,{night,scenario:{player:{pos:[0,0,-30],carried:10},lanterns:lamps,random_motes:false,random_shades:false,random_drifters:false,wind_enabled:false,time_left_s:121}});
-    g.step({interact:true});assert.equal(g.state,'won');c.finish(g);assert.equal(c.total,night*590);c.finish(g);assert.equal(c.total,night*590);
+    const g=new Game(t,{night,scenario:{player:{pos:[0,0,-30],carried:10},lanterns:lamps,random_motes:false,random_shades:false,random_drifters:false,wind_enabled:false,time_left_s:1/60}});
+    g.step({interact:true});assert.equal(g.state,'won');c.finish(g);const expected=Array.from({length:night},(_,i)=>150+(i+4)*149+150+150).reduce((a,b)=>a+b,0);assert.equal(c.total,expected);c.finish(g);assert.equal(c.total,expected);
     if(night<3){assert.equal(c.next(),true);assert.equal(c.screen,'intro');c.start();}else assert.equal(c.screen,'dawn');
   }
   assert.equal(c.next(),false);c.reset();assert.equal(c.total,0);
@@ -22,8 +22,8 @@ test('retrying a lost night preserves earlier wins and resets current credit',()
 });
 test('volume/sensitivity/creative preferences survive storage reload, clamp invalid values',()=>{
   const data=new Map(),storage={getItem:(k)=>data.get(k)??null,setItem:(k,v)=>data.set(k,v)};
-  saveSettings(storage,{volume:0.7,sensitivity:0.62,creative:false});assert.deepEqual(loadSettings(storage),{volume:0.7,sensitivity:0.62,creative:false});
-  assert.deepEqual(normalizeSettings({volume:4,sensitivity:-3}),{volume:1,sensitivity:0.1,creative:true});assert.equal(normalizeSettings(null).volume,0.35);
+  saveSettings(storage,{volume:0.7,sensitivity:0.62,creative:false,colorblind:true});assert.deepEqual(loadSettings(storage),{volume:0.7,sensitivity:0.62,creative:false,colorblind:true});
+  assert.deepEqual(normalizeSettings({volume:4,sensitivity:-3}),{volume:1,sensitivity:0.1,creative:true,colorblind:false});assert.equal(normalizeSettings(null).volume,0.35);
   assert.doesNotThrow(()=>loadSettings({getItem:()=>{throw new Error('disabled');}}));assert.doesNotThrow(()=>saveSettings(undefined,{}));
 });
 test('FPS meter excludes warmup/paused intervals and only passes complete 720p measurements',()=>{

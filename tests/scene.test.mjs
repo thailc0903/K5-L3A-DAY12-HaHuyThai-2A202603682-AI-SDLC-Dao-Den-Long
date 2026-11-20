@@ -26,3 +26,16 @@ test('CPU scene responds to real lamp and pulse events, including new enemy mode
   const view=new GameView(null,{renderer:backend()});view.build(game);for(const e of game.step({interact:true}))view.onEvent(e,game);view.render(game,0,1000,1/60,true);
   assert.equal(view.maps.lamps.get('L1').userData.core.visible,true);assert.equal(view.maps.lamps.get('L1').userData.safe.visible,true);assert.equal(view.ambient.intensity,0.15+0.55/6);assert.equal(view.maps.shades.size,1);assert.equal(view.maps.drifters.size,1);assert.equal(view.burst.visible,true);
 });
+
+test('CPU fuel bar, non-colour lamp shape/tear, threshold and one-Hz blink follow simulation',()=>{
+  const game=new Game(t,{scenario:{random_motes:false,random_shades:false,lanterns:[{id:'L1',lit:true,fuel:30},{id:'L2',lit:true,fuel:20}]}}),view=new GameView(null,{renderer:backend()});view.build(game);view.render(game,0,0,1/60,false);
+  const a=view.maps.lamps.get('L1').userData,b=view.maps.lamps.get('L2').userData,off=view.maps.lamps.get('L3').userData;
+  assert.equal(a.safe.visible,true);assert.equal(b.safe.visible,false);assert.equal(b.bar.visible,true);assert.equal(b.fill.scale.x,0.2);assert.equal(a.body.scale.y,1.2);assert.equal(off.body.scale.y,1.2*0.8);assert.equal(off.tear.visible,true);assert.equal(a.tear.visible,false);assert.equal(off.bar.visible,false);
+  for(const [tick,visible]of [[29,true],[30,false],[59,false],[60,true]]){game.simTick=tick;view.render(game,0,tick*1000/60,1/60,false);assert.equal(b.bar.visible,visible);assert.equal(b.core.visible,visible);assert.equal(a.core.visible,true);}
+  game.lanterns[0].lit=false;game.lanterns[0].fuelQ=0;view.render(game,0,1000,1/60,false);assert.equal(a.light.intensity,0);assert.equal(a.tear.visible,true);assert.equal(view.ambient.intensity,0.15+0.55/5);
+});
+test('CPU colour accessibility changes shade eyes and edge; enabling it cannot change headless state',()=>{
+  const game=new Game(t,{scenario:{random_shades:false,shades:[{pos:[10,0.8,0]}]}}),view=new GameView(null,{renderer:backend()});view.build(game);const before=game.snapshot();
+  view.render(game,0,0,1/60,true,true);assert.equal(view.mat.edge.color.getHexString(),'00b3ff');assert.equal(view.mat.eyes.color.getHexString(),'00b3ff');assert.deepEqual(game.snapshot(),before);
+  view.render(game,0,16,1/60,true,false);assert.equal(view.mat.edge.color.getHexString(),'7a3cff');assert.equal(view.mat.eyes.color.getHexString(),'7a3cff');assert.deepEqual(game.snapshot(),before);
+});

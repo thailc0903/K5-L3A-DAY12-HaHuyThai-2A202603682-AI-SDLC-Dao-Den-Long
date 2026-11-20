@@ -10,5 +10,5 @@ for (const file of files) {
   if(r.status!==0) process.exit(1);
 }
 const contract=JSON.parse(await readFile(new URL('game.contract.json',root),'utf8'));
-if(contract.contract_version!=='1.1' || contract.tuning.lantern_count_night1!==5) throw new Error('Invalid Phase 2 contract');
-console.log('PASS: source syntax and Contract v1.1. No dependency installation needed.');
+if(contract.contract_version!=='1.2' || contract.tuning.lantern_count_night1!==5) throw new Error('Invalid Phase 3 contract');
+console.log('PASS: source syntax and Contract v1.2. No dependency installation needed.');

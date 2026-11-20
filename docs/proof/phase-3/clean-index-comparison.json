@@ -1,0 +1,33 @@
+{
+  "method": "git checkout-index --all into an empty directory; run scripts/verify.mjs there",
+  "source_sha256_equal": true,
+  "test_totals_equal": true,
+  "jsonl_identical": true,
+  "jsonl_sha256": {
+    "benchmark-a.jsonl": "5b54a1f8b0fb0cbe403a4715c2095893f2d90ae12d0d38bd70ab7cce46880bbe",
+    "benchmark-b.jsonl": "5b54a1f8b0fb0cbe403a4715c2095893f2d90ae12d0d38bd70ab7cce46880bbe",
+    "charm.jsonl": "2936e8dda7a61483cb8df014b93d37f38dc79ea29a2f70ebf9146d7530336262",
+    "dash.jsonl": "1c813513dd862737179103e6df77874d56c97bd908b8110e15798cc4969c6a77",
+    "dawn-loss-oil.jsonl": "71cbbf51de3cc65a3d22cf7e6048b35eb4f3c70e2ae2016aa47d008595ebf56d",
+    "dawn-win-relight.jsonl": "19db6412fb45027b441fa7ec07706e27e9dc41318dd625e768efda80d17b5374",
+    "drain-pulse.jsonl": "0ff3021427d9f10a2004c039c50772c5cf0f2cbfe5f7aeca0648ca0a11458bf4",
+    "drain-repeat.jsonl": "2c77effce2b01725536aa436280445e6c836953b60f6832b4ff75b2965a1671b",
+    "drain.jsonl": "2c77effce2b01725536aa436280445e6c836953b60f6832b4ff75b2965a1671b",
+    "drifter-drop.jsonl": "eefcd710e43c8216b7e9676dbe30fc1d865bc800ff44709feb061896ba388b95",
+    "drifter-steal.jsonl": "7ac9b3bb2c31f68fa829c2e07dc6078fd64c323a17bf65fe9f3366b5937d7323",
+    "fall.jsonl": "9469627897c5ddb2d87f08fd44b101abf022ff73a801bc643221ad61aa9cc3a2",
+    "night-1-win.jsonl": "b8d5a1aab8ab5ca56b389acdae873ef528ee6be8bb7b0dea4c2d43202d095579",
+    "night-2-win.jsonl": "9a6598b09e5edc00a33bb77a62ccd84e9ec37f6166dc53b7ed406605fe6fb59b",
+    "night-3-win.jsonl": "5e891de1e1c9ff0623eb4d22b2b2a3d9d7482af930b33de9654912e9ac507add",
+    "no-early-win.jsonl": "165dcd21eb35b713f1db23fc2fa422db5286fa37a74913a6df1ff5e8a114110c",
+    "oil-out.jsonl": "020cd0517b84de6ce815089c816cf91ec72a2e3be3e32c5e6bd1c756832d56ce",
+    "pad.jsonl": "c583ec74214ceb15d19ad742a4dd33bb3c45c55a887dc3691c5df945fc462f2f",
+    "pause.jsonl": "8b8a85a8996b763650aa8edf7662333c7afa4f747b733884b6397ea1d153d01b",
+    "refuel.jsonl": "7e83cb4b607ac1c20d45f99318c79269199b4fee8eb5c6471c38aff5a85a24e3",
+    "relight.jsonl": "6c87bcb3fbdec4ceba6f014a597ab865aaa60d0cc0b0330c97ab01cb5f7161b9",
+    "safe-restored.jsonl": "9ce8eb295c57caaacbaed765f7e4d21eeabb1cc154aacb1ea1243d79955d79c4",
+    "tiers.jsonl": "0904558d3dd291577bf8fb8ef65941af59c8598630a98fc6877a2be87135d69e",
+    "wind.jsonl": "284d06bb5e2b2080ccc2c2f2e6423545efe8daea90a4192291174c56424aae91"
+  },
+  "scope": "Staged source export verified before the single Phase 3 commit. Not a GPU test or remote clone."
+}

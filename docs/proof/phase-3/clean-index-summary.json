@@ -1,0 +1,287 @@
+{
+  "contract_version": "1.2",
+  "node": "v24.22.3",
+  "platform": "win32",
+  "arch": "x64",
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+  "tests": {
+    "total": 73,
+    "passed": 73,
+    "failed": 0
+  },
+  "scenarios": [
+    {
+      "name": "dash",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 12,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 58.589500000000044
+    },
+    {
+      "name": "pause",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 62,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 62.75599999999986
+    },
+    {
+      "name": "drifter-steal",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 57.19250000000011
+    },
+    {
+      "name": "drifter-drop",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 121,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 63.802599999999984
+    },
+    {
+      "name": "charm",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 30,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 65.71900000000005
+    },
+    {
+      "name": "fall",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 61,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 60.78449999999975
+    },
+    {
+      "name": "pad",
+      "night": 2,
+      "end": {
+        "type": "end",
+        "ticks": 84,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 66.26689999999962
+    },
+    {
+      "name": "tiers",
+      "night": 3,
+      "end": {
+        "type": "end",
+        "ticks": 60,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 59.95899999999983
+    },
+    {
+      "name": "wind",
+      "night": 3,
+      "end": {
+        "type": "end",
+        "ticks": 2100,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 75.51700000000028
+    },
+    {
+      "name": "oil-out",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 6000,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 92.9947000000002
+    },
+    {
+      "name": "refuel",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 15
+      },
+      "verified": true,
+      "elapsed_ms": 71.92259999999987
+    },
+    {
+      "name": "relight",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 65
+      },
+      "verified": true,
+      "elapsed_ms": 66.99179999999978
+    },
+    {
+      "name": "drain",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 120,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 68.95289999999977
+    },
+    {
+      "name": "drain-pulse",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "playing",
+        "score": 20
+      },
+      "verified": true,
+      "elapsed_ms": 73.38869999999997
+    },
+    {
+      "name": "safe-restored",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 30,
+        "state": "playing",
+        "score": 15
+      },
+      "verified": true,
+      "elapsed_ms": 66.80390000000034
+    },
+    {
+      "name": "no-early-win",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 60,
+        "state": "playing",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 62.86999999999989
+    },
+    {
+      "name": "dawn-loss-oil",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "lost",
+        "score": 0
+      },
+      "verified": true,
+      "elapsed_ms": 65.57870000000003
+    },
+    {
+      "name": "dawn-win-relight",
+      "night": 1,
+      "end": {
+        "type": "end",
+        "ticks": 1,
+        "state": "won",
+        "score": 663
+      },
+      "verified": true,
+      "elapsed_ms": 64.14699999999993
+    }
+  ],
+  "campaign_win_fixtures": [
+    {
+      "type": "end",
+      "ticks": 1,
+      "state": "won",
+      "score": 1046
+    },
+    {
+      "type": "end",
+      "ticks": 1,
+      "state": "won",
+      "score": 1195
+    },
+    {
+      "type": "end",
+      "ticks": 1,
+      "state": "won",
+      "score": 1344
+    }
+  ],
+  "benchmark": {
+    "night": 3,
+    "ticks": 18000,
+    "elapsed_ms": [
+      641.8951999999999,
+      606.8001999999997
+    ],
+    "limit_ms": 30000,
+    "scenario": "tests/scenarios/phase-3/benchmark.json",
+    "note": "Invulnerability keeps gameplay running to dawn; wind disabled so stationary player cannot fall."
+  },
+  "determinism": {
+    "identical": true,
+    "sha256": "5b54a1f8b0fb0cbe403a4715c2095893f2d90ae12d0d38bd70ab7cce46880bbe"
+  },
+  "source_hash_format": "UTF-8 text with LF line endings",
+  "source_sha256": {
+    "game.contract.json": "dacb54443635f956be1c26b67165d8a854af160f9f6a6f179b940237e131ffef",
+    "index.html": "c999c36a26209202ec95fd32ed6d20531da2ccb3e011fd8fbc879de8bd5bf450",
+    "src/style.css": "6c03e61f0917a20037531e789c8317b095d67aa4e519c78f4e66d021caf3bcd6",
+    "src/game.mjs": "2d1b2ae5bc5fa099cc733352b0fa743b0717012650743a403658ebda83eb49b9",
+    "src/levels.mjs": "58e28acceb0d30255d6831bba23c0bcd287f6d315809bd45871f0654a55f0c81",
+    "src/rules.mjs": "b76e9c85c92c4bb52ffb33c489a24d0b88fabf63e0aaf9655fa841d1e964f9f1",
+    "src/validation.mjs": "17c726e49fae6d2648c887296846f0fa53d780c174d78023e0a8257064ef99d8",
+    "src/browser.mjs": "4d103bef860349475313b45bd7a072d098f6c62a3fa958eaebe2fa7237d30449",
+    "src/view.mjs": "5452dac188712b4a585207b5f917fbf70ed819e4cc481f3fbe403a17a56bd870",
+    "src/campaign.mjs": "5ae4e2babde7cbff0bc53ade28505d1240a54cd88e5f0148608c5c395f55b46b",
+    "src/audio.mjs": "451fd10c9871a44feaabe082e795e8c7c9640445daf9ea27f1ef9c52e15f021a",
+    "src/settings.mjs": "55a3c03725489599077d567a48d435e482c53125b7ed0b68f1e7460ceb28e497",
+    "src/performance.mjs": "f7777c898d624e3010c0b976eaf776e3951b4c535da7d598dfaaab0e45263992",
+    "scripts/headless.mjs": "fc50c51c41abcc880d6e46a8b4758adccf80b889020e7caf25b27ccdd4808ba6"
+  },
+  "visual_qa": {
+    "verified": false,
+    "fps_720p": null,
+    "reason": "Browser rendering, audio and real FPS require a browser check. In-game FPS recorder provided."
+  }
+}

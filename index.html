@@ -9,14 +9,14 @@
   <canvas id="game" tabindex="0" aria-label="Đảo Đèn Lồng, game 3D góc nhìn thứ ba"></canvas>
   <header id="hud" hidden>
     <div class="health panel"><span class="label">NGỌN LỬA</span><b id="health">● ● ●</b><small id="night-name">Đêm 1 · Đảo Bến</small></div>
-    <div class="clock panel"><span class="label">TRƯỚC BÌNH MINH</span><b id="timer">05:00</b><button id="pause" type="button" class="tiny">Tạm dừng · Esc</button></div>
-    <div class="progress panel"><span class="label">ĐÈN ĐÃ THẮP</span><b id="lit">0 / 5</b><span>Điểm <strong id="score">0</strong> · Tổng <strong id="total">0</strong></span></div>
+    <div class="clock panel"><span class="label">TRƯỚC BÌNH MINH</span><b id="timer">04:00</b><button id="pause" type="button" class="tiny">Tạm dừng · Esc</button></div>
+    <div class="progress panel"><span class="label">ĐÈN ĐANG SÁNG</span><b id="lit">0 / 5</b><span>Điểm <strong id="score">0</strong> · Tổng <strong id="total">0</strong></span></div>
   </header>
   <div id="wind" role="status" hidden>Gió mạnh sắp tới — hãy giữ bước chân!</div>
   <div id="beacon" hidden><span class="beacon-arrow">▲</span><span id="beacon-label"></span></div>
   <div id="bottom" hidden>
     <div class="controls"><kbd>WASD</kbd> đi · <kbd>Space</kbd> nhảy<br><kbd>Shift</kbd> lướt · <kbd>Q</kbd> tỏa sáng<br>Kéo chuột xoay camera · <kbd>Esc/P</kbd> tạm dừng</div>
-    <div class="inventory"><div id="hint" role="status">Gom đom đóm để thắp đèn</div><div id="slots" aria-label="Thanh đom đóm 10 ô"></div><span id="carry">0 / 10 đom đóm</span><span id="charm"></span></div>
+    <div class="inventory"><div id="hint" role="status">Gom đom đóm để thắp đèn</div><div id="slots" aria-label="Sức chứa 10 đom đóm"></div><span id="carry">0 / 10 đom đóm</span><span id="charm"></span></div>
     <div class="abilities"><div id="dash-cooldown"><kbd>Shift</kbd><span>Lướt</span><b id="dash-status">Sẵn sàng</b></div><div id="pulse-cooldown"><kbd>Q</kbd><span>Tỏa sáng · 3 đom đóm</span><b id="pulse-status">Cần ánh sáng</b></div></div>
   </div>
   <section id="overlay" class="overlay" aria-label="Menu game"><div id="panel" class="card"></div></section>

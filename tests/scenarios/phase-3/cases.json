@@ -1,0 +1,61 @@
+[
+  {
+    "name": "oil-out",
+    "ticks": 6000,
+    "every": 60,
+    "night": 1
+  },
+  {
+    "name": "refuel",
+    "ticks": 1,
+    "every": 1,
+    "inputs": "interact.json",
+    "night": 1
+  },
+  {
+    "name": "relight",
+    "ticks": 1,
+    "every": 1,
+    "inputs": "interact.json",
+    "night": 1
+  },
+  {
+    "name": "drain",
+    "ticks": 120,
+    "every": 1,
+    "night": 1
+  },
+  {
+    "name": "drain-pulse",
+    "ticks": 1,
+    "every": 1,
+    "inputs": "pulse.json",
+    "night": 1
+  },
+  {
+    "name": "safe-restored",
+    "ticks": 30,
+    "every": 1,
+    "inputs": "interact.json",
+    "night": 1
+  },
+  {
+    "name": "no-early-win",
+    "ticks": 60,
+    "every": 60,
+    "night": 1
+  },
+  {
+    "name": "dawn-loss-oil",
+    "ticks": 1,
+    "every": 1,
+    "night": 1
+  },
+  {
+    "name": "dawn-win-relight",
+    "ticks": 1,
+    "every": 1,
+    "inputs": "interact.json",
+    "night": 1
+  }
+]

@@ -1,4 +1,4 @@
-name: Phase 2 verification and regression
+name: Phase 3 verification and regression
 on: [push, pull_request]
 jobs:
   verify:
@@ -12,5 +12,5 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: phase-2-proof
-          path: docs/proof/phase-2/
+          name: phase-3-proof
+          path: docs/proof/phase-3/

@@ -16,10 +16,91 @@ const steps=(g,n,input={})=>{const result=[];for(let i=0;i<n&&!['won','lost'].in
 const close=(a,b,e=1e-7)=>assert.ok(Math.abs(a-b)<=e,`${a} != ${b}`);
 const allLit=(n)=>Array.from({length:n+4},(_,i)=>({id:`L${i+1}`,lit:true}));
 
-test('standard tuning v1.1, durations and score constants are exact',()=>{
-  assert.equal(contract.contract_version,'1.1');
-  for(const [key,value] of Object.entries({player_speed:6,carry_capacity:10,lantern_cost:10,pickup_radius:1,interact_radius:2,dash_speed:14,dash_duration_s:0.2,dash_cooldown_s:1.5,pulse_cost:3,pulse_radius:5,pulse_cooldown_s:3,pulse_stun_s:2,pulse_push_m:4,flames:3,invuln_s:1.5,hit_drop_ratio:0.5,safe_radius:6,shade_speed:4,shade_hit_radius:1,fall_enabled:true,night1_duration_s:300,night2_duration_s:330,night3_duration_s:360}))assert.equal(t[key],value,key);
-  assert.deepEqual(t.score,{per_mote:10,per_lantern:100,per_stun:5,per_second_left:2,per_flame_left:50});
+test('fuel uses exact integer quanta: decay, extinction, ever_lit and no construction credit',()=>{
+  const g=make({lanterns:[{id:'L1',lit:true}]});assert.equal(g.lanterns[0].fuelQ,6000);assert.equal(g.capacity(),10);
+  steps(g,5999);assert.equal(g.lanterns[0].fuelQ,1);assert.equal(g.lanterns[0].lit,true);
+  const e=g.step();assert.deepEqual(e.find((e)=>e.name==='lantern_out').data,{lantern_id:'L1'});
+  assert.deepEqual(g.snapshot().lanterns[0],{id:'L1',pos:[0,0,25],lit:false,deposited:0,fuel:0,ever_lit:true,relit_count:0});assert.equal(g.score,0);assert.equal(g.step().length,0);
+});
+test('first light costs ten; partial relight costs five, resets oil, raises capacity and scores 40',()=>{
+  const g=make({player:{carried:10},lanterns:[{id:'L1',pos:[0,0,0]}]});let e=g.step({interact:true});
+  assert.deepEqual(e.find((e)=>e.name==='lantern_lit').data,{lantern_id:'L1',relight:false});assert.equal(g.capacity(),12);assert.equal(g.score,150);assert.equal(g.lanterns[0].fuelQ,6000);
+  steps(g,6000,{interact:false});g.player.carried=3;e=g.step({interact:true});assert.equal(g.lanterns[0].deposited,3);assert.equal(g.lanterns[0].lit,false);assert.equal(g.score,165);
+  g.step({interact:false});g.player.carried=5;e=g.step({interact:true});assert.equal(g.player.carried,3);assert.equal(g.score,215);assert.equal(g.capacity(),14);assert.equal(g.lanterns[0].relit_count,1);assert.equal(g.lanterns[0].fuelQ,6000);assert.deepEqual(e.at(-1).data,{lantern_id:'L1',relight:true});
+});
+test('refuel uses ceil of exact deficit, clamps 100, awards only consumed motes and emits refuel',()=>{
+  const g=make({player:{carried:10},lanterns:[{id:'L1',pos:[0,0,0],lit:true,fuel:79.5}]});const e=g.step({interact:true});
+  assert.deepEqual(e.find((e)=>e.name==='refuel').data,{lantern_id:'L1',amount:3,fuel:100});assert.equal(g.player.carried,7);assert.equal(g.score,15);assert.equal(g.player.successfulLights,0);assert.equal(g.lanterns[0].relit_count,0);
+  const poor=make({player:{carried:1},lanterns:[{id:'L1',pos:[0,0,0],lit:true,fuel:40}]});poor.step({interact:true});assert.equal(poor.lanterns[0].fuelQ,2999);assert.equal(poor.score,5);
+});
+test('interaction filters full oil, then nearest receptive lamp and id; decay precedes interaction',()=>{
+  const g=make({player:{carried:3},lanterns:[{id:'L1',pos:[0,0,0],lit:true},{id:'L2',pos:[1,0,0],lit:true,fuel:50},{id:'L3',pos:[-1,0,0]}]});
+  g.interact(()=>true);assert.equal(g.events[0].data.lantern_id,'L2');assert.equal(g.lanterns[0].fuelQ,6000);
+  const full=make({player:{carried:2},lanterns:[{id:'L1',pos:[0,0,0],lit:true}]});full.interact(()=>true);assert.deepEqual(full.events,[]);assert.equal(full.score,0);assert.equal(full.player.carried,2);
+  full.step({interact:true});assert.equal(full.events[0].name,'refuel');assert.equal(full.player.carried,1);assert.equal(full.lanterns[0].fuelQ,6000);
+});
+test('extinction before interaction permits relight on that very tick',()=>{
+  const g=make({player:{carried:5},lanterns:[{id:'L1',pos:[0,0,0],lit:true,fuel:1/60}]});const e=g.step({interact:true});
+  assert.deepEqual(e.map((e)=>e.name),['lantern_out','deposit','lantern_lit']);assert.equal(g.score,65);assert.equal(g.lanterns[0].fuelQ,6000);assert.equal(g.lanterns[0].relit_count,1);
+});
+test('capacity increases per successful lighting, clamps twenty, scenario lights do not count, resets each night',()=>{
+  for(const [n,cap]of [[0,10],[1,12],[4,18],[5,20],[12,20]]){const g=make({player:{successful_lights:n,carried:cap-1},lanterns:allLit(1),motes:[[0,0,0],[0,0,0]]});g.step();assert.equal(g.snapshot().player.capacity,cap);assert.equal(g.player.carried,cap);assert.equal(g.motes.length,1);}
+  assert.equal(make({},2).capacity(),10);assert.equal(make({},3).capacity(),10);
+});
+test('safe zone is inclusive at exactly 30 real fuel, absent below even when snapshot rounds to 30',()=>{
+  const g=make({lanterns:[{id:'L1',pos:[0,0,0],lit:true,fuel:30+1/60}],shades:[{pos:[7,0.8,0]}]});g.step();assert.equal(g.lanterns[0].fuelQ,1800);assert.equal(g.safeAt([6,0,0]),true);g.step();assert.equal(g.safeAt([0,0,0]),false);assert.equal(g.snapshot().lanterns[0].fuel,30);
+});
+test('wander chooses nearest weak lit lamp over off lamps, ties by id; chase keeps player target',()=>{
+  const scenario={player:{pos:[-30,0,0]},lanterns:[{id:'L1',pos:[11,0,0],lit:true,fuel:20},{id:'L2',pos:[9,0,0],lit:true,fuel:20},{id:'L3',pos:[10,0,0]}],shades:[{pos:[10,0.8,0],state:'wander'}]};
+  const g=make(scenario);g.step();assert.equal(g.shades[0].state,'drain');assert.equal(g.shades[0].target_lantern_id,'L1');
+  const chase=make({...scenario,player:{pos:[0,0,0]},shades:[{pos:[10,0.8,0],state:'chase'}]});chase.step();assert.equal(chase.shades[0].state,'chase');assert.ok(chase.shades[0].pos[0]<10);
+  const off=make({player:{pos:[-30,0,0]},lanterns:[{id:'L1',pos:[12,0,0]},{id:'L2',pos:[8,0,0]}],shades:[{pos:[10,0.8,0],state:'wander'}]});off.step();assert.equal(off.shades[0].target_lantern_id,'L1');assert.ok(off.shades[0].pos[0]>10);
+});
+test('drain is stationary; two shades stack with natural decay and report each sixty drain ticks',()=>{
+  const g=make({player:{pos:[-30,0,0]},lanterns:[{id:'L1',pos:[10,0,0],lit:true,fuel:20}],shades:[{id:'S1',pos:[10,0.8,0],state:'drain',target_lantern_id:'L1'},{id:'S2',pos:[11,0.8,0],state:'drain',target_lantern_id:'L1'}]});
+  const e=steps(g,59);assert.equal(e.filter((e)=>e.name==='fuel_drain').length,0);const last=g.step();assert.deepEqual(last.filter((e)=>e.name==='fuel_drain').map((e)=>e.data),[{lantern_id:'L1',shade_id:'S1',fuel:9},{lantern_id:'L1',shade_id:'S2',fuel:9}]);assert.deepEqual(g.shades.map((s)=>s.pos),[[10,0.8,0],[11,0.8,0]]);assert.equal(g.lanterns[0].fuelQ,540);
+  const out=steps(g,50);assert.equal(out.filter((e)=>e.name==='lantern_out').length,1);assert.ok(g.shades.every((s)=>s.state==='wander'));assert.equal(g.lanterns[0].fuelQ,0);
+});
+test('drain stops for player within six, stale or remote targets; stunned recovers to wander',()=>{
+  const base={lanterns:[{id:'L1',pos:[10,0,0],lit:true,fuel:20}],shades:[{pos:[10,0.8,0],state:'drain',target_lantern_id:'L1'}]};
+  const near=make({...base,player:{pos:[4,0,0]}});near.step();assert.equal(near.shades[0].state,'chase');
+  const far=make({...base,player:{pos:[-30,0,0]},shades:[{pos:[13,0.8,0],state:'drain',target_lantern_id:'L1'}]});far.step();assert.equal(far.shades[0].state,'wander');assert.equal(far.lanterns[0].fuelQ,1199);
+  const missing=make({player:{pos:[-30,0,0]},shades:[{pos:[10,0.8,0],state:'drain',target_lantern_id:'L1'}]});missing.step();assert.equal(missing.shades[0].state,'wander');
+  const stun=make({...base,player:{pos:[-30,0,0]},shades:[{pos:[10,0.8,0],state:'stunned',state_ticks_left:1}]});stun.step();assert.equal(stun.shades[0].state,'drain'); // expired -> wander -> selects weak lamp in AI step
+});
+test('refuel restoring safe radius evacuates draining shade by tick thirty without damage',()=>{
+  const g=make({player:{pos:[0,0,0],carried:3},lanterns:[{id:'L1',pos:[0,0,0],lit:true,fuel:20}],shades:[{pos:[0,0.8,0],state:'drain',target_lantern_id:'L1'}]});g.step({interact:true});assert.equal(g.lanterns[0].fuelQ,2994);assert.notEqual(g.shades[0].state,'drain');steps(g,29);close(distance(g.shades[0].pos,[0,0,0]),6);assert.equal(g.player.flames,3);
+});
+test('safety restoration at exactly thirty completes evacuation even when oil falls below thirty next tick',()=>{
+  const g=make({player:{carried:1},lanterns:[{id:'L1',pos:[0,0,0],lit:true,fuel:20.1}],shades:[{pos:[0,0.8,0],state:'drain',target_lantern_id:'L1'}]});g.step({interact:true});assert.equal(g.lanterns[0].fuelQ,1800);assert.equal(g.shades[0].state,'wander');steps(g,29);close(distance(g.shades[0].pos,[0,0,0]),6);assert.equal(g.player.flames,3);assert.equal(g.lanterns[0].fuelQ,1771);
+});
+test('safety evacuation also meets thirty-tick deadline during sixty-tick recoil',()=>{
+  const g=make({player:{carried:10},lanterns:[{id:'L1',pos:[0,0,0]}],shades:[{pos:[0,0.8,0],state:'recoil',state_ticks_left:60}]});g.step({interact:true});steps(g,29);close(distance(g.shades[0].pos,[0,0,0]),6);assert.equal(g.player.flames,3);
+});
+test('pulse awards total fifteen for a pre-pulse drainer, five for every other shade',()=>{
+  const g=make({player:{carried:3},lanterns:[{id:'L1',pos:[4,0,0],lit:true,fuel:20}],shades:[{id:'S1',pos:[4,0.8,0],state:'drain',target_lantern_id:'L1'},{id:'S2',pos:[3,0.8,0],state:'chase'},{id:'S3',pos:[2,0.8,0],state:'stunned'}]});g.step({pulse:true});assert.equal(g.score,25);assert.ok(g.shades.every((s)=>s.state==='stunned'));assert.ok(g.shades.every((s)=>s.target_lantern_id===null));
+});
+test('pause freezes oil, drain cadence, capacity and time',()=>{
+  const g=make({player:{pos:[-30,0,0],successful_lights:2},lanterns:[{id:'L1',pos:[10,0,0],lit:true,fuel:20}],shades:[{pos:[10,0.8,0],state:'drain',target_lantern_id:'L1'}]});g.step({pause:true});steps(g,120);assert.equal(g.lanterns[0].fuelQ,1200);assert.equal(g.shades[0].drainTicks,0);assert.equal(g.capacity(),14);g.step({pause:false});g.step({pause:true});assert.equal(g.lanterns[0].fuelQ,1194);
+});
+test('dawn thresholds are 3/5, 4/6, 5/7; final fuel floors and flame bonuses only on win',()=>{
+  for(const night of [1,2,3])for(const enough of [false,true]){const needed=night+2,count=needed-(enough?0:1),g=make({player:{flames:2},lanterns:allLit(night).slice(0,count),time_left_s:1/60},night);const e=g.step();assert.equal(g.state,enough?'won':'lost');assert.equal(e.at(-1).data.reason,enough?'dawn_survived':'dawn');assert.equal(g.score,enough?count*149+100:0);g.step();assert.equal(g.score,enough?count*149+100:0);}
+});
+test('final tick sees oil-out, relight and lethal fall before evaluating dawn',()=>{
+  const lamps=[{id:'L1',lit:true},{id:'L2',lit:true},{id:'L3',pos:[0,0,0],lit:true,fuel:1/60}];
+  const out=make({lanterns:lamps,time_left_s:1/60});assert.equal(out.step().at(-1).data.reason,'dawn');
+  const relight=make({lanterns:lamps,player:{carried:5},time_left_s:1/60});assert.equal(relight.step({interact:true}).at(-1).data.reason,'dawn_survived');assert.equal(relight.score,65+2*149+150+150);
+  const dead=make({player:{pos:[41,-11,0],flames:1},lanterns:allLit(1),time_left_s:1/60});assert.equal(dead.step().at(-1).data.reason,'no_flames');assert.equal(dead.score,0);
+});
+test('scenario defaults and new v1.2 fields validate bounds and deterministic fuel precision',()=>{
+  const g=make({player:{successful_lights:3,carried:16},lanterns:[{id:'L1',lit:true},{id:'L2',lit:false,fuel:40,ever_lit:true},{id:'L3',lit:true,fuel:0}]});assert.equal(g.capacity(),16);assert.equal(g.snapshot().lanterns[0].fuel,100);assert.equal(g.snapshot().lanterns[1].fuel,0);assert.equal(g.snapshot().lanterns[2].lit,false);assert.equal(g.score,0);
+  for(const bad of [{player:{successful_lights:-1}},{player:{successful_lights:1.1}},{player:{successful_lights:1,carried:13}},{lanterns:[{id:'L1',fuel:101}]},{lanterns:[{id:'L1',fuel:-1}]},{lanterns:[{id:'L1',ever_lit:1}]},{shades:[{pos:[0,0,0],state:'drain',target_lantern_id:'L9'}]}])assert.throws(()=>make(bad),InputError);
+});
+
+test('standard tuning v1.2, durations and score constants are exact',()=>{
+  assert.equal(contract.contract_version,'1.2');
+  for(const [key,value] of Object.entries({player_speed:6,carry_capacity:10,lantern_cost:10,pickup_radius:1,interact_radius:2,dash_speed:14,dash_duration_s:0.2,dash_cooldown_s:1.5,pulse_cost:3,pulse_radius:5,pulse_cooldown_s:3,pulse_stun_s:2,pulse_push_m:4,flames:3,invuln_s:1.5,hit_drop_ratio:0.5,safe_radius:6,shade_speed:4,shade_hit_radius:1,fall_enabled:true,night1_duration_s:240,night2_duration_s:270,night3_duration_s:300,fuel_max:100,fuel_decay_per_s:1,fuel_per_mote:10,relight_cost:5,win_ratio:0.6,drain_per_s:5,low_fuel_threshold:30,capacity_max:20}))assert.equal(t[key],value,key);
+  assert.deepEqual(t.score,{per_mote:5,per_lantern:100,per_stun:5,per_relight:40,per_drain_stun:15,per_lit_at_dawn:50,per_flame_left:50});
 });
 test('three standard maps have correct lamps, spawn sets and no initial shades',()=>{
   for(const night of [1,2,3]){const g=new Game(t,{night});assert.equal(g.lanterns.length,night+4);assert.equal(g.motes.length,20);assert.equal(new Set(g.motes.map((m)=>JSON.stringify(m.pos))).size,20);assert.equal(g.shades.length,0);assert.equal(g.timeLeft,t[`night${night}_duration_s`]);}
@@ -30,7 +111,7 @@ test('regression: origin tick zero, five lamps, no construction rewards',()=>{
   const g=make({player:{carried:10},lanterns:[{id:'L3',lit:true}]});assert.deepEqual(g.snapshot().player.pos,[0,0,0]);assert.equal(g.tick,0);assert.equal(g.simTick,0);assert.equal(g.score,0);assert.deepEqual(g.events,[]);assert.equal(g.lanterns[0].lit,false);
 });
 test('regression: camera movement, six metres per second, diagonal normalization',()=>{
-  const g=make();steps(g,60,{move:[0,1]});close(g.player.pos[2],6);close(g.timeLeft,299);
+  const g=make();steps(g,60,{move:[0,1]});close(g.player.pos[2],6);close(g.timeLeft,239);
   const yaw=make();steps(yaw,60,{move:[0,1],cam_yaw_deg:90});close(yaw.player.pos[0],6);close(yaw.player.pos[2],0);
   const diagonal=make();steps(diagonal,60,{move:[1,1]});close(distance(diagonal.player.pos,[0,0,0]),6);
 });
@@ -45,13 +126,13 @@ test('regression: pickup radius/capacity plus the new height bound; pickup gives
   const g=make({motes:[[1,0,0],[1.001,0,0],[0,1.5,0],[0,1.501,0],...Array.from({length:10},()=>[0,0,0])]});g.step();assert.equal(g.player.carried,10);assert.equal(g.motes.length,4);assert.equal(g.score,0);
 });
 test('regression: deposit remaining cost, partial progress and held input edges',()=>{
-  const g=make({player:{carried:10},lanterns:[{id:'L1',pos:[2,0,0],deposited:4}]});const e=g.step({interact:true});assert.deepEqual(e.find((e)=>e.name==='deposit').data,{lantern_id:'L1',amount:6,deposited:10});assert.equal(g.player.carried,4);assert.equal(g.score,160);assert.equal(g.lanterns[0].lit,true);assert.equal(g.step().length,0);
+  const g=make({player:{carried:10},lanterns:[{id:'L1',pos:[2,0,0],deposited:4}]});const e=g.step({interact:true});assert.deepEqual(e.find((e)=>e.name==='deposit').data,{lantern_id:'L1',amount:6,deposited:10});assert.equal(g.player.carried,4);assert.equal(g.score,130);assert.equal(g.lanterns[0].lit,true);assert.equal(g.step().length,0);
 });
 test('regression: nearest unlit lamp wins; equal distance resolves by id',()=>{
-  const g=make({player:{carried:3},lanterns:[{id:'L1',pos:[2.001,0,0]},{id:'L2',pos:[-2,0,0]},{id:'L3',pos:[2,0,0]}]});const e=g.step({interact:true});assert.equal(e[0].data.lantern_id,'L2');assert.equal(g.lanterns[1].deposited,3);assert.equal(g.lanterns[1].lit,false);assert.equal(g.score,30);
+  const g=make({player:{carried:3},lanterns:[{id:'L1',pos:[2.001,0,0]},{id:'L2',pos:[-2,0,0]},{id:'L3',pos:[2,0,0]}]});const e=g.step({interact:true});assert.equal(e[0].data.lantern_id,'L2');assert.equal(g.lanterns[1].deposited,3);assert.equal(g.lanterns[1].lit,false);assert.equal(g.score,15);
 });
 test('new order: pickup and deposit before pulse (insufficient remainder prevents pulse)',()=>{
-  const g=make({player:{carried:9},motes:[[0,0,0]],lanterns:[{id:'L1',pos:[0,0,0]}]});const e=g.step({interact:true,pulse:true});assert.deepEqual(e.map((e)=>e.name),['mote_picked','deposit','lantern_lit']);assert.equal(g.score,200);assert.equal(g.player.carried,0);
+  const g=make({player:{carried:9},motes:[[0,0,0]],lanterns:[{id:'L1',pos:[0,0,0]}]});const e=g.step({interact:true,pulse:true});assert.deepEqual(e.map((e)=>e.name),['mote_picked','deposit','lantern_lit']);assert.equal(g.score,150);assert.equal(g.player.carried,0);
 });
 test('dash: 14 m/s for exactly 12 ticks, held button cannot retrigger',()=>{
   const g=make();const e=g.step({dash:true});assert.equal(e[0].name,'dash');steps(g,11);close(g.player.pos[2],2.8);steps(g,78);close(g.player.pos[2],2.8);assert.equal(g.player.dashCd,1);g.step({dash:false});assert.equal(g.player.dashCd,0);g.step({dash:true});assert.ok(g.player.pos[2]>2.8);
@@ -100,7 +181,7 @@ test('fall with last flame ends immediately without respawning',()=>{
   const g=make({player:{pos:[41,-11,0],flames:1}});const e=g.step();assert.equal(g.state,'lost');assert.equal(e.at(-1).data.reason,'no_flames');assert.equal(g.player.respawnTicks,0);
 });
 test('pause advances tick only; freezes timers, ttl, spawns and position',()=>{
-  const g=make({player:{carried:3,charm_ticks:600,dash_cd_ticks:90,pulse_cd_ticks:180,invuln_ticks:90},motes:[{pos:[10,0,0],kind:'dropped',ttl_ticks:480}]});g.step({pause:true,move:[1,0]});steps(g,600);assert.equal(g.state,'paused');assert.equal(g.tick,601);assert.equal(g.simTick,0);assert.equal(g.timeLeft,300);assert.equal(g.player.charmTicks,600);assert.equal(g.player.invulnTicks,90);assert.equal(g.motes[0].ttl,480);assert.equal(g.player.pos[0],0);
+  const g=make({player:{carried:3,charm_ticks:600,dash_cd_ticks:90,pulse_cd_ticks:180,invuln_ticks:90},motes:[{pos:[10,0,0],kind:'dropped',ttl_ticks:480}]});g.step({pause:true,move:[1,0]});steps(g,600);assert.equal(g.state,'paused');assert.equal(g.tick,601);assert.equal(g.simTick,0);assert.equal(g.timeLeft,240);assert.equal(g.player.charmTicks,600);assert.equal(g.player.invulnTicks,90);assert.equal(g.motes[0].ttl,480);assert.equal(g.player.pos[0],0);
   g.step({pause:false});const e=g.step({pause:true});assert.equal(e[0].name,'resumed');assert.equal(g.state,'playing');assert.equal(g.simTick,1);close(g.player.pos[0],0.12);
 });
 test('mote schedule: 20 unique initially, one at tick 240, no free point means skip',()=>{
@@ -170,12 +251,12 @@ test('wind warns 120 ticks, pushes 2 m/s for 300 ticks, disabled flag is respect
   const g=make({player:{pos:[35,0,0]},wind_enabled:true},3);steps(g,1679);assert.equal(g.wind.warning,false);g.step();assert.equal(g.wind.warning,true);assert.equal(g.wind.active,false);steps(g,119);const before=[...g.player.pos];g.step();assert.equal(g.wind.active,true);close(distance(before,g.player.pos),2/60);steps(g,299);assert.equal(g.wind.active,true);g.step();assert.equal(g.wind.active,false);
   const off=make({},3);steps(off,1800);assert.equal(off.wind.active,false);
 });
-test('winning scores only deposited motes plus lamp and final bonus; no-flames beats win',()=>{
-  const lamps=allLit(1);lamps[4]={id:'L5',pos:[0,0,0]};const g=make({player:{carried:10,flames:2},lanterns:lamps,time_left_s:121});g.step({interact:true});assert.equal(g.state,'won');assert.equal(g.score,100+100+240+100);g.step();assert.equal(g.score,540);
+test('replaced early-win rule: all lamps lit stays playing, no time bonus; no-flames beats dawn',()=>{
+  const lamps=allLit(1);lamps[4]={id:'L5',pos:[0,0,0]};const g=make({player:{carried:10,flames:2},lanterns:lamps,time_left_s:121});g.step({interact:true});assert.equal(g.state,'playing');assert.equal(g.score,150);g.step();assert.equal(g.score,150);
   const dead=make({player:{flames:0},lanterns:allLit(1)});assert.equal(dead.state,'lost');
 });
 test('last lamp at dawn wins if alive; zero time or zero flames otherwise loses',()=>{
-  const lamps=allLit(1);lamps[4]={id:'L5',pos:[0,0,0]};const g=make({player:{carried:10},lanterns:lamps,time_left_s:1/60});assert.equal(g.step({interact:true}).at(-1).data.reason,'all_lit');
+  const lamps=allLit(1);lamps[4]={id:'L5',pos:[0,0,0]};const g=make({player:{carried:10},lanterns:lamps,time_left_s:1/60});assert.equal(g.step({interact:true}).at(-1).data.reason,'dawn_survived');
   const dawn=make({time_left_s:1/60});assert.equal(dawn.step().at(-1).data.reason,'dawn');const hit=make({player:{flames:1},shades:[{pos:[0,0.8,0]}]});assert.equal(hit.step().at(-1).data.reason,'no_flames');
 });
 test('scenario replacement, mandatory snapshot arrays, stable ids and seed determinism',()=>{
@@ -187,8 +268,8 @@ test('invalid frames, new scenario fields and night-specific ids are validated',
   for(const bad of [{player:{pos:[0,0]}},{player:{carried:11}},{player:{charm_ticks:-1}},{lanterns:[{id:'L6'}]},{shades:[{pos:[0,0,0],state:'bad'}]},{random_drifters:'false'}])assert.throws(()=>validateScenario(bad,t,1),InputError);
   assert.doesNotThrow(()=>validateScenario({lanterns:[{id:'L7'}]},t,3));
 });
-test('CLI v1.1: all nights, tick zero/one, pause snapshots, deterministic bytes and errors',()=>{
-  const temp=mkdtempSync(join(tmpdir(),'dao-den-long-v11-'));
+test('CLI v1.2: all nights, tick zero/one, pause snapshots, deterministic bytes and errors',()=>{
+  const temp=mkdtempSync(join(tmpdir(),'dao-den-long-v12-'));
   try{
     writeFileSync(join(temp,'scenario.json'),JSON.stringify({...empty,motes:[[0,0,0]]}));writeFileSync(join(temp,'inputs.json'),JSON.stringify({frames:[{tick:0,pause:true},{tick:1,pause:false},{tick:3,pause:true}]}));
     const run=(out,night=1)=>spawnSync(process.execPath,['scripts/headless.mjs','--seed','12','--night',String(night),'--ticks','5','--snapshot-every','1','--scenario',join(temp,'scenario.json'),'--inputs',join(temp,'inputs.json'),'--out',join(temp,out)],{cwd:root,encoding:'utf8'});
