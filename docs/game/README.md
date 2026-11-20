@@ -9,7 +9,7 @@ README gốc và các tài liệu lab được giữ nguyên theo lựa chọn n
 Điều kiện: Node.js 20+ trong PATH và trình duyệt hỗ trợ WebGL2. Chạy macOS/Linux/Windows; không cần npm install, tài khoản hoặc Internet sau clone vì Three.js đã đi kèm.
 
 ```sh
-git clone https://github.com/thailc0903/K5--L3A--DAY12--HaHuyThai---2A202603682--AI-SDLC-Dao-Den-Long.git dao-den-long
+git clone https://github.com/thailc0903/K5-L3A-DAY12-HaHuyThai-2A202603682-AI-SDLC-Dao-Den-Long.git dao-den-long
 cd dao-den-long
 node scripts/serve.mjs
 ```
@@ -96,6 +96,6 @@ Manifest `tests/scenarios/phase-2/cases.json` có9 scenario mới. Verify còn c
 
 [AGENTS.md](../../AGENTS.md), script verify, hook và workflow được cập nhật cho Phase2. Hook bật sau khi Node có PATH bằng `git config core.hooksPath .githooks`; CI Ubuntu chỉ coi là đạt khi có run thật xanh. Các test cũ đổi luật có lý do ở [phase-2-changes.md](../notes/phase-2-changes.md). Nhật ký AI/token/giới hạn ở [phase-2-ai-log.md](../notes/phase-2-ai-log.md).
 
-Giữ tag phase-1; bàn giao mới bằng phase-2. Chưa tạo Release v1.0.0/video cuối vì thuộc Phase4. Tên remote hiện có nhiều dấu gạch nối liên tiếp, chưa đổi; hạn tag theo Coach, chưa có mốc giờ để xác nhận đúng hạn. Người học cần review độc lập và kiểm tra checklist UI trong bằng chứng.
+Giữ tag phase-1; bàn giao mới bằng phase-2. Chưa tạo Release v1.0.0/video cuối vì thuộc Phase4. GitHub đã thông báo repo chuyển sang tên đúng mẫu như lệnh clone ở trên; địa chỉ cũ chuyển hướng tới repo mới. Hạn tag theo Coach, chưa có mốc giờ để xác nhận đúng hạn. Người học cần review độc lập và kiểm tra checklist UI trong bằng chứng.
 
 Giấy phép và nguồn: [CREDITS.md](../../CREDITS.md), [LICENSE](../../LICENSE), vendor/THREE-LICENSE.txt. Không có API key hoặc dịch vụ tài khoản trong game.
