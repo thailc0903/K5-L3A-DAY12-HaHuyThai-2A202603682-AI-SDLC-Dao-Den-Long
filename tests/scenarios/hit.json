@@ -1,0 +1,6 @@
+{
+  "player": { "flames": 3 },
+  "random_motes": false,
+  "random_shades": false,
+  "shades": [{ "id": "S1", "pos": [0, 0, 0] }]
+}

@@ -1,0 +1,41 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 1861
+    },
+    {
+      "path": "/src/style.css",
+      "status": 200,
+      "bytes": 2188
+    },
+    {
+      "path": "/src/browser.mjs",
+      "status": 200,
+      "bytes": 12595
+    },
+    {
+      "path": "/src/game.mjs",
+      "status": 200,
+      "bytes": 8828
+    },
+    {
+      "path": "/src/validation.mjs",
+      "status": 200,
+      "bytes": 3962
+    },
+    {
+      "path": "/vendor/three.module.js",
+      "status": 200,
+      "bytes": 1314681
+    },
+    {
+      "path": "/game.contract.json",
+      "status": 200,
+      "bytes": 857
+    }
+  ],
+  "limit": "HTTP/assets only; not a browser rendering test."
+}

@@ -1,0 +1,154 @@
+TAP version 13
+# Subtest: default level has five lamps, 30 motes, three shades and starts at origin
+ok 1 - default level has five lamps, 30 motes, three shades and starts at origin
+  ---
+  duration_ms: 3.8547
+  type: 'test'
+  ...
+# Subtest: 60 forward ticks travel five metres; yaw uses contract formula
+ok 2 - 60 forward ticks travel five metres; yaw uses contract formula
+  ---
+  duration_ms: 1.8262
+  type: 'test'
+  ...
+# Subtest: diagonal input is normalized and frame fields persist
+ok 3 - diagonal input is normalized and frame fields persist
+  ---
+  duration_ms: 0.3293
+  type: 'test'
+  ...
+# Subtest: island prevents falling but does not move outside scenario positions at tick zero
+ok 4 - island prevents falling but does not move outside scenario positions at tick zero
+  ---
+  duration_ms: 0.3132
+  type: 'test'
+  ...
+# Subtest: jump leaves ground and held jump does not trigger again after landing
+ok 5 - jump leaves ground and held jump does not trigger again after landing
+  ---
+  duration_ms: 1.3151
+  type: 'test'
+  ...
+# Subtest: pickup includes the exact radius, excludes outside, and respects capacity
+ok 6 - pickup includes the exact radius, excludes outside, and respects capacity
+  ---
+  duration_ms: 0.3207
+  type: 'test'
+  ...
+# Subtest: snapshot distances ignore visual height
+ok 7 - snapshot distances ignore visual height
+  ---
+  duration_ms: 0.2142
+  type: 'test'
+  ...
+# Subtest: deposit consumes only remaining cost and lights once at interact boundary
+ok 8 - deposit consumes only remaining cost and lights once at interact boundary
+  ---
+  duration_ms: 0.5265
+  type: 'test'
+  ...
+# Subtest: partial deposit, outside interaction and deterministic nearest lamp
+ok 9 - partial deposit, outside interaction and deterministic nearest lamp
+  ---
+  duration_ms: 0.3573
+  type: 'test'
+  ...
+# Subtest: scenario patches lamps by id and replaces empty entity lists without rewards
+ok 10 - scenario patches lamps by id and replaces empty entity lists without rewards
+  ---
+  duration_ms: 0.3618
+  type: 'test'
+  ...
+# Subtest: random flags are respected, supplied arrays replace defaults, ids never collide
+ok 11 - random flags are respected, supplied arrays replace defaults, ids never collide
+  ---
+  duration_ms: 0.3111
+  type: 'test'
+  ...
+# Subtest: pulse consumes light, includes radius boundary and pushes three metres
+ok 12 - pulse consumes light, includes radius boundary and pushes three metres
+  ---
+  duration_ms: 0.4854
+  type: 'test'
+  ...
+# Subtest: pulse requires resources and a fresh press after 180 ticks
+ok 13 - pulse requires resources and a fresh press after 180 ticks
+  ---
+  duration_ms: 2.1671
+  type: 'test'
+  ...
+# Subtest: stun lasts exactly 120 steps including the pulse step
+ok 14 - stun lasts exactly 120 steps including the pulse step
+  ---
+  duration_ms: 0.9785
+  type: 'test'
+  ...
+# Subtest: pickup precedes pulse; pulse precedes deposit when pressed together
+ok 15 - pickup precedes pulse; pulse precedes deposit when pressed together
+  ---
+  duration_ms: 0.4717
+  type: 'test'
+  ...
+# Subtest: shade chase moves at declared speed without overshooting
+ok 16 - shade chase moves at declared speed without overshooting
+  ---
+  duration_ms: 0.6313
+  type: 'test'
+  ...
+# Subtest: damage is one hit per step and immunity expires at t+90
+ok 17 - damage is one hit per step and immunity expires at t+90
+  ---
+  duration_ms: 1.3712
+  type: 'test'
+  ...
+# Subtest: lit lamp protects player and excludes shades; unlit lamp does not
+ok 18 - lit lamp protects player and excludes shades; unlit lamp does not
+  ---
+  duration_ms: 0.2108
+  type: 'test'
+  ...
+# Subtest: victory awards only new lamp and final bonuses, then stops
+ok 19 - victory awards only new lamp and final bonuses, then stops
+  ---
+  duration_ms: 0.2459
+  type: 'test'
+  ...
+# Subtest: dawn loss, no-flames loss, and initial terminal scenarios
+ok 20 - dawn loss, no-flames loss, and initial terminal scenarios
+  ---
+  duration_ms: 0.2954
+  type: 'test'
+  ...
+# Subtest: victory takes priority when the final deposit coincides with dawn
+ok 21 - victory takes priority when the final deposit coincides with dawn
+  ---
+  duration_ms: 0.1434
+  type: 'test'
+  ...
+# Subtest: same seeded game and actions produce identical snapshots/events
+ok 22 - same seeded game and actions produce identical snapshots/events
+  ---
+  duration_ms: 38.0567
+  type: 'test'
+  ...
+# Subtest: malformed inputs and scenarios are rejected instead of coerced
+ok 23 - malformed inputs and scenarios are rejected instead of coerced
+  ---
+  duration_ms: 1.1507
+  type: 'test'
+  ...
+# Subtest: CLI honours tick model, snapshot cadence, deterministic bytes and exit code 2
+ok 24 - CLI honours tick model, snapshot cadence, deterministic bytes and exit code 2
+  ---
+  duration_ms: 478.6758
+  type: 'test'
+  ...
+1..24
+# tests 24
+# suites 0
+# pass 24
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 648.5319
