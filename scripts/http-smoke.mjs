@@ -11,7 +11,9 @@ try {
     child.on('exit',(code)=>{clearTimeout(timer);reject(new Error(`Server exited: ${code}`));});
   });
   const checks=[];
-  for(const [path,type] of [['/','text/html'],['/src/style.css','text/css'],['/src/browser.mjs','text/javascript'],['/src/game.mjs','text/javascript'],['/src/validation.mjs','text/javascript'],['/vendor/three.module.js','text/javascript'],['/game.contract.json','application/json']]) {
+  const resources=[['/','text/html'],['/src/style.css','text/css'],['/vendor/three.module.js','text/javascript'],['/game.contract.json','application/json']];
+  for(const file of ['browser','game','validation','levels','rules','campaign','settings','audio','performance','view'])resources.push([`/src/${file}.mjs`,'text/javascript']);
+  for(const [path,type] of resources) {
     const r=await fetch(base+path); assert.equal(r.status,200,path); assert.ok(r.headers.get('content-type').startsWith(type),path);
     const text=await r.text(); assert.ok(text.length>0,path); checks.push({path,status:r.status,bytes:Buffer.byteLength(text)});
   }

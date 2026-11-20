@@ -6,3 +6,4 @@ node_modules/
 *.log
 test-output/
 docs/proof/phase-1/.pending/
+docs/proof/phase-2/.pending/

@@ -1,0 +1,11 @@
+[
+  {"name":"dash","night":1,"ticks":12,"inputs":"dash-inputs.json","every":1},
+  {"name":"pause","night":1,"ticks":62,"inputs":"pause-inputs.json","every":1},
+  {"name":"drifter-steal","night":2,"ticks":1,"every":1},
+  {"name":"drifter-drop","night":2,"ticks":121,"inputs":"pulse-inputs.json","every":1},
+  {"name":"charm","night":2,"ticks":30,"inputs":"charm-inputs.json","every":1},
+  {"name":"fall","night":1,"ticks":61,"every":1},
+  {"name":"pad","night":2,"ticks":84,"every":1},
+  {"name":"tiers","night":3,"ticks":60,"every":1},
+  {"name":"wind","night":3,"ticks":2100,"every":10}
+]

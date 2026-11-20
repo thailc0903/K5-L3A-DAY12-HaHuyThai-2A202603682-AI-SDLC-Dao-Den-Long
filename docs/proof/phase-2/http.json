@@ -1,0 +1,76 @@
+{
+  "status": "PASS",
+  "checks": [
+    {
+      "path": "/",
+      "status": 200,
+      "bytes": 2314
+    },
+    {
+      "path": "/src/style.css",
+      "status": 200,
+      "bytes": 6081
+    },
+    {
+      "path": "/vendor/three.module.js",
+      "status": 200,
+      "bytes": 1314681
+    },
+    {
+      "path": "/game.contract.json",
+      "status": 200,
+      "bytes": 999
+    },
+    {
+      "path": "/src/browser.mjs",
+      "status": 200,
+      "bytes": 14637
+    },
+    {
+      "path": "/src/game.mjs",
+      "status": 200,
+      "bytes": 19318
+    },
+    {
+      "path": "/src/validation.mjs",
+      "status": 200,
+      "bytes": 4917
+    },
+    {
+      "path": "/src/levels.mjs",
+      "status": 200,
+      "bytes": 3722
+    },
+    {
+      "path": "/src/rules.mjs",
+      "status": 200,
+      "bytes": 1204
+    },
+    {
+      "path": "/src/campaign.mjs",
+      "status": 200,
+      "bytes": 705
+    },
+    {
+      "path": "/src/settings.mjs",
+      "status": 200,
+      "bytes": 846
+    },
+    {
+      "path": "/src/audio.mjs",
+      "status": 200,
+      "bytes": 2610
+    },
+    {
+      "path": "/src/performance.mjs",
+      "status": 200,
+      "bytes": 715
+    },
+    {
+      "path": "/src/view.mjs",
+      "status": 200,
+      "bytes": 16412
+    }
+  ],
+  "limit": "HTTP/assets only; not a browser rendering test."
+}
