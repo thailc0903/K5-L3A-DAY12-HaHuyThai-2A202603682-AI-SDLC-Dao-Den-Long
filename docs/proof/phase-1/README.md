@@ -12,6 +12,7 @@ Các file TAP/JSON/JSONL ở đây được tạo bởi `node scripts/verify.mjs
 | Hoàn thành Đêm 1 mặc định | playthrough-inputs.json, playthrough.jsonl | Đã chạy toàn màn và replay input, không override scenario |
 | Tick và input, JSONL, exit code lỗi | tests.tap | Đã chạy CLI thật |
 | Tất định cùng seed/đầu vào | default-a.jsonl, default-b.jsonl, summary.json | So byte giống hệt |
+| Clone sạch, không dùng file untracked | clean-clone-summary.json | Clone local commit d97ee10; verify, 24 test và HTTP đều đạt trên Windows |
 | Server và tài nguyên web | http.json | HTTP đã chạy; không phải render test |
 | Mây/nón/đèn, phong cách đêm, HUD, đảo sáng dần | src/browser.mjs, src/style.css | Đã viết; chưa có ảnh/chơi thử trực quan |
 | Nút Chơi lại sau thắng/thua | src/browser.mjs | Đã viết; chưa kiểm tra thao tác UI |
@@ -27,6 +28,8 @@ node scripts/verify.mjs
 ```
 
 Đọc summary.json để xem môi trường chạy, kết quả và hash. tests.tap chứa tên từng test và số lượng đạt/thất bại. Đường chơi mẫu dùng seed 12, ghi bằng input thường rồi replay qua headless.
+
+clean-clone-summary.json được sao chép nguyên từ kết quả verify trong một clone local sạch tại commit d97ee10 (mã game và test hiện tại). Các cập nhật bàn giao sau commit này chỉ bổ sung bằng chứng, tài liệu và quyền thực thi hook.
 
 ## Bổ sung bằng chứng trực quan
 

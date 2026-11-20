@@ -1,0 +1,31 @@
+{
+  "contract_version": "1.0",
+  "node": "v24.22.3",
+  "platform": "win32",
+  "arch": "x64",
+  "cpu": "11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz",
+  "tests": "PASS; see tests.tap for actual count",
+  "win": {
+    "type": "end",
+    "ticks": 1,
+    "state": "won",
+    "score": 270
+  },
+  "loss": {
+    "type": "end",
+    "ticks": 181,
+    "state": "lost",
+    "score": 0
+  },
+  "default_playthrough": {
+    "type": "end",
+    "ticks": 1809,
+    "state": "won",
+    "score": 1014
+  },
+  "determinism": {
+    "identical": true,
+    "sha256": "1353cf6775a2f7cc007e3e4d239d1fd9e0129ba22dffa675318a5c4fd09d58b6"
+  },
+  "scope": "Automated Phase 1 logic/CLI verification. Does not certify browser visual QA or grading on macOS/Linux."
+}

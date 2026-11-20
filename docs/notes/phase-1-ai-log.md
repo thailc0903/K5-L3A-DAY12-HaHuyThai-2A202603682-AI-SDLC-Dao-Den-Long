@@ -13,6 +13,7 @@
 - Đã thực thi bộ test logic/CLI; output được script sinh vào docs/proof/phase-1/, không sửa tay.
 - Kiểm tra đầu vào, tick 0/1, bán kính, nút theo cạnh, pulse/cooldown, sát thương/bất tử, scenario, điểm, thắng/thua và tất định.
 - Đường chơi mặc định được bộ điều khiển kiểm chứng ghi thành inputs rồi replay bằng CLI. Bộ điều khiển chỉ đọc trạng thái và phát input hợp lệ; không chỉnh máu, teleport hoặc thay đổi màn.
+- Clone local sạch commit d97ee10 rồi chạy verify bằng Node sẵn có: 24/24 test, HTTP và replay đều đạt; đã lưu summary từ clone. Đây là kiểm tra Windows, không gán nhãn thành kết quả Linux.
 - Lỗi công cụ: lần chạy thử một đoạn JS qua PowerShell -e mất dấu nháy. Phát hiện ngay từ SyntaxError; chuyển thành file .mjs để chạy lệnh trực tiếp, không dùng chuỗi shell chứa mã.
 - Review phát hiện check.mjs cần fileURLToPath thay vì thao tác URL.pathname để hỗ trợ đường dẫn có khoảng trắng; đã sửa.
 - Node không có trên PATH ở máy hiện tại. Dùng runtime Node sẵn có của Codex để kiểm chứng; thêm play.ps1 làm lối mở server trên Windows, không đổi môi trường máy.
