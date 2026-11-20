@@ -1,0 +1,13 @@
+// Original procedural music/SFX. Never imported by the headless runner.
+export class GameAudio {
+  constructor(volume=0.35){this.volume=volume;this.playing=false;this.night=1;this.timer=null;this.available=true;}
+  async unlock(){try{if(!this.ctx){const Context=globalThis.AudioContext??globalThis.webkitAudioContext;if(!Context)throw new Error('Web Audio unavailable');this.ctx=new Context();this.master=this.ctx.createGain();this.master.gain.value=this.volume;this.master.connect(this.ctx.destination);this.music=this.ctx.createGain();this.music.gain.value=0;this.music.connect(this.master);}await this.ctx.resume();}catch{this.available=false;}}
+  setVolume(value){this.volume=value;if(this.ctx)this.master.gain.setTargetAtTime(value,this.ctx.currentTime,0.04);}
+  tone(freq,duration=0.2,delay=0,type='sine',level=0.16,music=false){if(!this.ctx||this.ctx.state!=='running')return;const now=this.ctx.currentTime+delay,osc=this.ctx.createOscillator(),gain=this.ctx.createGain();osc.type=type;osc.frequency.setValueAtTime(freq,now);gain.gain.setValueAtTime(0.0001,now);gain.gain.exponentialRampToValueAtTime(Math.max(0.0002,level),now+0.015);gain.gain.exponentialRampToValueAtTime(0.0001,now+duration);osc.connect(gain);gain.connect(music?this.music:this.master);osc.start(now);osc.stop(now+duration+0.03);osc.onended=()=>{osc.disconnect();gain.disconnect();};}
+  setPlaying(playing,night=1){this.playing=playing;this.night=night;if(this.ctx)this.music.gain.setTargetAtTime(playing?0.45:0,this.ctx.currentTime,0.1);if(this.timer){clearInterval(this.timer);this.timer=null;}if(playing&&this.ctx){const bar=()=>{if(!this.playing)return;const notes=[220,261.63,293.66,329.63,392,329.63,293.66,261.63];notes.forEach((n,i)=>this.tone(n*(night===3?1.12246:1),0.85,i*0.5,'sine',0.075,true));this.tone(110,3.8,0,'sine',0.09,true);};bar();this.timer=setInterval(bar,4000);}}
+  event(name,{creative=true,index=0}={}){
+    const notes={mote_picked:[880,1174.66],lantern_lit:[523.25,659.25,783.99],pulse:[220,440,880],player_hit:[146.83,110],jump:[329.63,440],dash:[392,783.99],charm_picked:[659.25,880,1174.66],game_won:[523.25,659.25,783.99,1046.5],game_lost:[293.66,220,164.81],shade_spawned:[82.41,98],countdown:[880],wind:[196,261.63,196],drifter_steal:[392,293.66],drifter_drop:[659.25,783.99]}[name];
+    if(notes)notes.forEach((n,i)=>this.tone(n,name==='pulse'?0.45:0.2,i*0.08,name==='player_hit'?'triangle':'sine',name==='countdown'?0.12:0.16));
+    if(name==='lantern_lit'&&creative){const scale=[523.25,587.33,659.25,783.99,880,1046.5,1174.66];this.tone(scale[index%scale.length],1.3,0.35,'sine',0.12);}
+  }
+}
